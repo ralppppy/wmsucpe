@@ -4,9 +4,12 @@ const LayoutContext = createContext()
 
 function LayoutContextProvider({ children }) {
    let [collapsed, setCollapsed] = useState(false)
+   let [userData, setUserData] = useState("")
 
    return (
-      <LayoutContext.Provider value={{ collapsed, setCollapsed }}>
+      <LayoutContext.Provider
+         value={{ collapsed, setCollapsed, userData, setUserData }}
+      >
          {children}
       </LayoutContext.Provider>
    )

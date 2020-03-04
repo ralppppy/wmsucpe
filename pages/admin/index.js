@@ -1,11 +1,13 @@
 import AdminLayout from "../../components/layouts/admin/AdminLayout"
 import { Row, Col, Card, Typography } from "antd"
+import Auth from "../../protectedroutes/Auth"
+import { useEffect, useContext } from "react"
 
 const { Title, Text } = Typography
 
-function index() {
+function index({ userData }) {
    return (
-      <AdminLayout>
+      <AdminLayout userData={userData.user}>
          <Row gutter={[{ md: 50 }, 20]}>
             <Col md={{ span: 8 }}>
                <Card className="shadow-sm">
@@ -77,6 +79,14 @@ function index() {
          </Row>
       </AdminLayout>
    )
+}
+
+index.getInitialProps = async ({ req, res }) => {
+   let userData = await Auth.AdminProtectRoute(req, res, true)
+
+   return {
+      userData
+   }
 }
 
 export default index

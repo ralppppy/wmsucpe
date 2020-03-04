@@ -1,6 +1,10 @@
 import { useContext } from "react"
-import { Layout, Menu, Icon, Typography } from "antd"
-import { MdDashboard } from "react-icons/md"
+import { Layout, Menu, Typography } from "antd"
+import {
+   DashboardOutlined,
+   TransactionOutlined,
+   CalendarOutlined
+} from "@ant-design/icons"
 
 //Context
 import { LayoutContext } from "../../../context/admin/LayoutContext"
@@ -28,16 +32,19 @@ function SideNav() {
 
             <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
                <Menu.Item key="1">
-                  <Icon type="dashboard" style={{ fontSize: 25 }} />
-                  <span strong>Dashboard</span>
+                  <DashboardOutlined style={{ fontSize: 25 }} />
+                  {/* <Icon type="dashboard" style={{ fontSize: 25 }} /> */}
+                  <span>Dashboard</span>
                </Menu.Item>
                <Menu.Item key="2">
-                  <Icon type="transaction" style={{ fontSize: 25 }} />
-                  <span strong>Transaction</span>
+                  <TransactionOutlined style={{ fontSize: 25 }} />
+                  {/* <Icon type="transaction" style={{ fontSize: 25 }} /> */}
+                  <span>Transaction</span>
                </Menu.Item>
                <Menu.Item key="3">
-                  <Icon type="calendar" style={{ fontSize: 25 }} />
-                  <span strong>Calendar</span>
+                  <CalendarOutlined style={{ fontSize: 25 }} />
+                  {/* <Icon type="calendar" style={{ fontSize: 25 }} /> */}
+                  <span>Calendar</span>
                </Menu.Item>
             </Menu>
          </Sider>

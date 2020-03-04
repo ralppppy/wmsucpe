@@ -1,12 +1,18 @@
 import { useContext, useEffect } from "react"
-import { Layout, Icon } from "antd"
+import { Layout, Dropdown, Menu } from "antd"
+import {
+   DownOutlined,
+   MenuFoldOutlined,
+   MenuUnfoldOutlined
+} from "@ant-design/icons"
 import { useMediaQuery } from "react-responsive"
-const { Header } = Layout
 
 //Context
 import { LayoutContext } from "../../../context/admin/LayoutContext"
 
-function AdminHeader() {
+const { Header } = Layout
+
+function AdminHeader({ userData }) {
    let { collapsed, setCollapsed } = useContext(LayoutContext)
 
    const isDesktopOrLaptop = useMediaQuery({
@@ -39,15 +45,44 @@ function AdminHeader() {
       setCollapsed(!collapsed)
    }
 
+   const menu = (
+      <Menu>
+         <Menu.Item>
+            <a
+               target="_blank"
+               rel="noopener noreferrer"
+               href="http://www.alipay.com/"
+            >
+               Logout
+            </a>
+         </Menu.Item>
+      </Menu>
+   )
+
    return (
       <Header className="shadow-sm" style={{ background: "#fff", padding: 0 }}>
-         <Icon
-            className="trigger ml-2"
-            type={collapsed ? "menu-unfold" : "menu-fold"}
-            onClick={toggle}
-            style={{ fontSize: 25 }}
-         />
-         <a className="float-right mr-5">RALP yosores</a>
+         {!collapsed ? (
+            <MenuFoldOutlined
+               className="trigger ml-2"
+               onClick={toggle}
+               style={{ fontSize: 25 }}
+            />
+         ) : (
+            <MenuUnfoldOutlined
+               className="trigger ml-2"
+               onClick={toggle}
+               style={{ fontSize: 25 }}
+            />
+         )}
+         <Dropdown overlay={menu} trigger={["click"]}>
+            <a
+               className="ant-dropdown-link float-right mr-5"
+               onClick={e => e.preventDefault()}
+            >
+               {userData.firstName} {userData.lastName} <DownOutlined />
+            </a>
+         </Dropdown>
+         ,
       </Header>
    )
 }

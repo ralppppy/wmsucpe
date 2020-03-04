@@ -4,8 +4,10 @@ import SideNav from "./SideNav"
 import Content from "./Content"
 import AdminHeader from "./AdminHeader"
 import { LayoutContextProvider } from "../../../context/admin/LayoutContext"
+import "bootstrap/dist/css/bootstrap.min.css"
+import "antd/dist/antd.min.css"
 
-function AdminLayout({ children }) {
+function AdminLayout({ children, userData }) {
    return (
       <>
          <Head>
@@ -14,28 +16,17 @@ function AdminLayout({ children }) {
                name="viewport"
                content="initial-scale=1.0, width=device-width"
             />
-            <link
-               rel="stylesheet"
-               type="text/css"
-               href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            />
-
-            <link
-               rel="stylesheet"
-               type="text/css"
-               href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.26.12/antd.min.css"
-            />
          </Head>
          <LayoutContextProvider>
             <Layout style={{ height: "100%" }}>
                <SideNav />
                <Layout>
-                  <AdminHeader />
+                  <AdminHeader userData={userData} />
+
                   <Content children={children} />
                </Layout>
             </Layout>
          </LayoutContextProvider>
-
          <style global jsx>{`
             html,
             body,

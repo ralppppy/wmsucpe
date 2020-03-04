@@ -1,18 +1,56 @@
+import { useState } from "react"
 import Head from "next/head"
-import { Card, Typography, Form, Icon, Input, Button, Checkbox } from "antd"
+import { Card, Typography, Input, Button, Form } from "antd"
+import { UserOutlined, LockOutlined } from "@ant-design/icons"
+//import { Form } from "@ant-design/compatible"
+import Router from "next/router"
+
+//AUTH
+import Auth from "../../protectedroutes/Auth"
+
+//STYLE
+import "bootstrap/dist/css/bootstrap.min.css"
+import "antd/dist/antd.min.css"
 
 const { Title, Text } = Typography
 
-function login({ form }) {
-   const { getFieldDecorator, validateFields } = form
+function login() {
+   const [loginSuccess, setLoginSuccess] = useState("")
+   const [buttonLoading, setButtonLoading] = useState(false)
 
    const handleSubmit = e => {
       e.preventDefault()
-      validateFields((err, values) => {
+      validateFields(async (err, values) => {
          if (!err) {
-            console.log("Received values of form: ", values)
+            setButtonLoading(true)
+            let success = await Auth.authenticateUser(values)
+
+            if (success.success) {
+               Router.push("/admin")
+               // setButtonLoading(false)
+            } else {
+               setButtonLoading(false)
+               setLoginSuccess(success)
+            }
          }
       })
+   }
+
+   const onFinish = async values => {
+      setButtonLoading(true)
+      let success = await Auth.authenticateUser(values)
+
+      if (success.success) {
+         Router.push("/admin")
+         // setButtonLoading(false)
+      } else {
+         setButtonLoading(false)
+         setLoginSuccess(success)
+      }
+   }
+
+   const onFinishFailed = errorInfo => {
+      console.log("Failed:", errorInfo)
    }
 
    return (
@@ -23,70 +61,71 @@ function login({ form }) {
                name="viewport"
                content="initial-scale=1.0, width=device-width"
             />
-            <link
-               rel="stylesheet"
-               type="text/css"
-               href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            />
-
-            <link
-               rel="stylesheet"
-               type="text/css"
-               href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.26.12/antd.min.css"
-            />
          </Head>
          <div className="d-flex justify-content-center align-items-center ">
             <Card className="h-auto w-50 shadow-sm text-center rounded">
                <Title>Login</Title>
-               <Form onSubmit={handleSubmit} className="login-form">
-                  <Form.Item>
-                     {getFieldDecorator("username", {
-                        rules: [
-                           {
-                              required: true,
-                              message: "Please input your username!"
-                           }
-                        ]
-                     })(
-                        <Input
-                           prefix={
-                              <Icon
-                                 type="user"
-                                 style={{ color: "rgba(0,0,0,.25)" }}
-                              />
-                           }
-                           placeholder="Username"
-                        />
-                     )}
+
+               {loginSuccess && !loginSuccess.success && (
+                  <div className="alert alert-danger">
+                     <Text className="text-center text-danger">
+                        {loginSuccess.message}
+                     </Text>
+                  </div>
+               )}
+
+               <Form
+                  initialValues={{ remember: true }}
+                  onFinish={onFinish}
+                  //onFinishFailed={onFinishFailed}
+                  className="login-form"
+               >
+                  <Form.Item
+                     name="email"
+                     rules={[
+                        {
+                           required: true,
+                           message: "Please input your Email!"
+                        },
+                        {
+                           type: "email",
+                           message: "Please input a valid email!"
+                        }
+                     ]}
+                  >
+                     <Input
+                        prefix={
+                           <UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                        }
+                        placeholder="Email"
+                     />
                   </Form.Item>
-                  <Form.Item>
-                     {getFieldDecorator("password", {
-                        rules: [
-                           {
-                              required: true,
-                              message: "Please input your Password!"
-                           }
-                        ]
-                     })(
-                        <Input
-                           prefix={
-                              <Icon
-                                 type="lock"
-                                 style={{ color: "rgba(0,0,0,.25)" }}
-                              />
-                           }
-                           type="password"
-                           placeholder="Password"
-                        />
-                     )}
+
+                  <Form.Item
+                     name="password"
+                     rules={[
+                        {
+                           required: true,
+                           message: "Please input your Password!"
+                        }
+                     ]}
+                  >
+                     <Input
+                        prefix={
+                           <LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                        }
+                        type="password"
+                        placeholder="Password"
+                     />
                   </Form.Item>
                   <Form.Item>
                      <Button
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
+                        loading={buttonLoading ? true : false}
                      >
-                        Log in
+                        {buttonLoading ? "Logging in" : "Log in"}
                      </Button>
                   </Form.Item>
                </Form>
@@ -121,4 +160,10 @@ function login({ form }) {
    )
 }
 
-export default Form.create({ name: "normal_login" })(login)
+login.getInitialProps = async ({ req, res }) => {
+   let pathName = await Auth.AdminProtectRoute(req, res, false)
+
+   return { ok: true }
+}
+
+export default login
