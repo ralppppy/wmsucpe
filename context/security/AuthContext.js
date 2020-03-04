@@ -71,14 +71,6 @@ export const AuthProvider = props => {
       }
    }
 
-   const loadUserData = _data => {
-      dispatch({
-         type: LOAD_USER_DATA,
-         user: _data.user,
-         token: _data.token
-      })
-   }
-
    console.log(authState)
 
    return (

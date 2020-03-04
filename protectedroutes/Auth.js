@@ -2,6 +2,9 @@ import { parseCookies } from "../lib/parseCookies"
 import fetch from "isomorphic-unfetch"
 import Cookie from "js-cookie"
 import Axios from "axios"
+import { useContext, useEffect } from "react"
+
+import { AuthContext } from "../context/security/AuthContext"
 
 const Auth = () => {
    const baseUrl = "http://localhost:3001/"
@@ -72,6 +75,14 @@ const Auth = () => {
             errorType: error.response.data.errorType
          }
       }
+   }
+
+   const loadUserData = _data => {
+      dispatch({
+         type: LOAD_USER_DATA,
+         user: _data.user,
+         token: _data.token
+      })
    }
 
    return {

@@ -6,6 +6,10 @@ import { useEffect, useContext } from "react"
 const { Title, Text } = Typography
 
 function index({ userData }) {
+   useEffect(() => {
+      localStorage.setItem("techVoiceToken", userData.token)
+   }, userData)
+
    return (
       <AdminLayout userData={userData.user}>
          <Row gutter={[{ md: 50 }, 20]}>
