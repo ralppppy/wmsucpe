@@ -19,7 +19,6 @@ function SideNav({ router }) {
    let [key, setKey] = useState("1")
 
    useEffect(() => {
-      console.log(router.pathname)
       switch (router.pathname) {
          case "/admin":
             setKey("1")
@@ -59,7 +58,6 @@ function SideNav({ router }) {
             <img
                style={{ padding: 5 }}
                width={70}
-               //src="/brand/ec.jpg"
                src={EClogo}
                alt="exact-construct"
             />

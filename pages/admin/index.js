@@ -1,12 +1,16 @@
 import AdminLayout from "../../components/layouts/admin/AdminLayout"
 import { Row, Col, Card, Typography } from "antd"
 import Auth from "../../protectedroutes/Auth"
+import Head from "next/head"
 
 const { Title, Text } = Typography
 
 function index({ userData }) {
    return (
       <>
+         <Head>
+            <title>Dashboard</title>
+         </Head>
          <Row gutter={[{ md: 50 }, 20]}>
             <Col md={{ span: 8 }}>
                <Card className="shadow-sm">

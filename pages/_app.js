@@ -1,4 +1,11 @@
 import AdminLayout from "../components/layouts/admin/AdminLayout"
+import {
+   BrowserView,
+   MobileView,
+   isBrowser,
+   isMobile
+} from "react-device-detect"
+import Mobile from "../components/layouts/admin/mobile/Mobile"
 
 // import App from 'next/app'
 
@@ -6,9 +13,18 @@ function MyApp({ Component, pageProps }) {
    return (
       <>
          {pageProps.userData ? (
-            <AdminLayout userData={pageProps.userData.user}>
-               <Component {...pageProps} />
-            </AdminLayout>
+            <>
+               <BrowserView>
+                  <AdminLayout userData={pageProps.userData.user}>
+                     <Component {...pageProps} />
+                  </AdminLayout>
+               </BrowserView>
+               <MobileView>
+                  <Mobile userData={pageProps.userData.user}>
+                     <Component {...pageProps} />
+                  </Mobile>
+               </MobileView>
+            </>
          ) : (
             <Component {...pageProps} />
          )}

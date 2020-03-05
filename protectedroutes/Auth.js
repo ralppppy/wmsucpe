@@ -13,9 +13,12 @@ const Auth = () => {
 
       let token
       if (req || res) {
+         console.log("SSR")
          token = cookies.techVoiceToken
       } else {
-         token = localStorage.getItem("techVoiceToken")
+         console.log("CSR")
+         token = cookies.techVoiceToken
+         //  token = localStorage.getItem("techVoiceToken")
       }
 
       if (admin) {
@@ -38,7 +41,7 @@ const Auth = () => {
                } else {
                   Cookie.remove("techVoiceToken")
                   localStorage.removeItem("techVoiceToken")
-                  Router.push("/admin")
+                  Router.push("/admin/login")
                }
             }
          } else {
@@ -67,7 +70,6 @@ const Auth = () => {
                }
             } catch (error) {
                Cookie.remove("techVoiceToken")
-
                return
             }
          } else {
@@ -85,7 +87,6 @@ const Auth = () => {
          Cookie.set("techVoiceToken", res.data.token)
          localStorage.setItem("techVoiceToken", res.data.token)
 
-         //  return Router.push("/admin")
          return {
             success: true
          }

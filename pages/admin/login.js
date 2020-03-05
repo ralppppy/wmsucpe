@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Head from "next/head"
 import { Card, Typography, Input, Button, Form } from "antd"
 import { UserOutlined, LockOutlined } from "@ant-design/icons"
@@ -10,35 +10,21 @@ import Auth from "../../protectedroutes/Auth"
 //STYLE
 import "bootstrap/dist/css/bootstrap.min.css"
 import "antd/dist/antd.min.css"
+import { isMobile } from "react-device-detect"
 
 const { Title, Text } = Typography
 
 function login() {
    const [loginSuccess, setLoginSuccess] = useState("")
    const [buttonLoading, setButtonLoading] = useState(false)
+   const [cardWidth, setCardWidth] = useState("")
 
-   const handleSubmit = e => {
-      e.preventDefault()
-      validateFields(async (err, values) => {
-         if (!err) {
-            setButtonLoading(true)
-            let success = await Auth.authenticateUser(values)
-
-            if (success.success) {
-               Router.push("/admin")
-               // setButtonLoading(false)
-            } else {
-               setButtonLoading(false)
-               setLoginSuccess(success)
-            }
-         }
-      })
-   }
-
+   useEffect(() => {
+      isMobile ? setCardWidth("w-100") : setCardWidth("w-50")
+   }, [isMobile])
    const onFinish = async values => {
       setButtonLoading(true)
       let success = await Auth.authenticateUser(values)
-      console.log(success)
       if (success.success) {
          Router.push("/admin")
          // setButtonLoading(false)
@@ -62,8 +48,10 @@ function login() {
             />
          </Head>
          <div className="d-flex justify-content-center align-items-center ">
-            <Card className="h-auto w-50 shadow-sm text-center rounded">
-               <Title>Login</Title>
+            <Card
+               className={`h-auto ${cardWidth} shadow-sm text-center rounded`}
+            >
+               <Title level={isMobile ? 2 : 1}>Login</Title>
 
                {loginSuccess && !loginSuccess.success && (
                   <div className="alert alert-danger">

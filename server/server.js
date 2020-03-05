@@ -22,7 +22,7 @@ app.prepare()
          .catch(errors => console.log(`Errors: ${errors}`))
 
       // Cors
-      server.use(cors())
+      // server.use(cors())
       // BodyparserMiddleware
       server.use(express.json())
       server.use(express.urlencoded({ extended: false }))

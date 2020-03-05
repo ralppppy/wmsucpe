@@ -93,7 +93,7 @@ function AdminHeader({ userData }) {
                {userData.firstName} {userData.lastName} <CaretDownOutlined />
             </a>
          </Dropdown>
-         <style global jsx>{`
+         <style jsx>{`
             .anticon svg {
                display: inline-block;
                margin-bottom: 10px;
