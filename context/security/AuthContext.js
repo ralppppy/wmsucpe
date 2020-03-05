@@ -26,15 +26,19 @@ export const AuthProvider = props => {
             axios.defaults.headers.common["X-Auth-Token"] = token
 
             try {
-               const res = await axios.get("api/auth/user")
+               const res = await axios.get("/api/auth/user")
 
                const _data = {
                   token,
                   user: res.data
                }
 
+               console.log(_data)
+
                loadUserData(_data)
             } catch (error) {
+               console.log(error)
+
                localStorage.removeItem("techVoiceToken")
 
                dispatch({ type: USER_LOADING })
@@ -49,7 +53,7 @@ export const AuthProvider = props => {
 
    const authenticateUser = async payload => {
       try {
-         const res = await axios.post("api/auth", payload)
+         const res = await axios.post("/api/auth", payload)
 
          axios.defaults.headers.common["X-Auth-Token"] = res.data.token
 
@@ -70,8 +74,6 @@ export const AuthProvider = props => {
          }
       }
    }
-
-   console.log(authState)
 
    return (
       <AuthContext.Provider

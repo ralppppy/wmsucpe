@@ -5,7 +5,9 @@ import {
    MenuFoldOutlined,
    MenuUnfoldOutlined
 } from "@ant-design/icons"
+import Cookie from "js-cookie"
 import { useMediaQuery } from "react-responsive"
+import Router from "next/router"
 
 //Context
 import { LayoutContext } from "../../../context/admin/LayoutContext"
@@ -45,6 +47,14 @@ function AdminHeader({ userData }) {
       setCollapsed(!collapsed)
    }
 
+   const handleLogout = e => {
+      e.preventDefault()
+
+      Cookie.remove("techVoiceToken")
+      localStorage.removeItem("techVoiceToken")
+      Router.push("/admin/login")
+   }
+
    const menu = (
       <Menu>
          <Menu.Item>
@@ -52,6 +62,7 @@ function AdminHeader({ userData }) {
                target="_blank"
                rel="noopener noreferrer"
                href="http://www.alipay.com/"
+               onClick={e => handleLogout(e)}
             >
                Logout
             </a>

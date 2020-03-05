@@ -2,7 +2,6 @@ import { useState } from "react"
 import Head from "next/head"
 import { Card, Typography, Input, Button, Form } from "antd"
 import { UserOutlined, LockOutlined } from "@ant-design/icons"
-//import { Form } from "@ant-design/compatible"
 import Router from "next/router"
 
 //AUTH
@@ -39,7 +38,7 @@ function login() {
    const onFinish = async values => {
       setButtonLoading(true)
       let success = await Auth.authenticateUser(values)
-
+      console.log(success)
       if (success.success) {
          Router.push("/admin")
          // setButtonLoading(false)

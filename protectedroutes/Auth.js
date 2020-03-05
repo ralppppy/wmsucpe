@@ -1,10 +1,9 @@
 import { parseCookies } from "../lib/parseCookies"
-import fetch from "isomorphic-unfetch"
+
 import Cookie from "js-cookie"
 import Axios from "axios"
-import { useContext, useEffect } from "react"
 
-import { AuthContext } from "../context/security/AuthContext"
+import Router from "next/router"
 
 const Auth = () => {
    const baseUrl = "http://localhost:3001/"
@@ -12,7 +11,12 @@ const Auth = () => {
    const AdminProtectRoute = async (req, res, admin) => {
       const cookies = parseCookies(req)
 
-      const token = cookies.techVoiceToken
+      let token
+      if (req || res) {
+         token = cookies.techVoiceToken
+      } else {
+         token = localStorage.getItem("techVoiceToken")
+      }
 
       if (admin) {
          if (token) {
@@ -28,11 +32,21 @@ const Auth = () => {
 
                return _data
             } catch (error) {
-               Cookie.remove("techVoiceToken")
-               res.redirect("/admin/login")
+               if (req || res) {
+                  Cookie.remove("techVoiceToken")
+                  res.redirect("/admin/login")
+               } else {
+                  Cookie.remove("techVoiceToken")
+                  localStorage.removeItem("techVoiceToken")
+                  Router.push("/admin")
+               }
             }
          } else {
-            res.redirect("/admin/login")
+            if (req || res) {
+               res.redirect("/admin/login")
+            } else {
+               Router.push("/admin/login")
+            }
          }
       } else {
          if (token) {
@@ -46,9 +60,14 @@ const Auth = () => {
                   user: _res.data
                }
 
-               res.redirect("/admin")
+               if (req || res) {
+                  res.redirect("/admin")
+               } else {
+                  Router.push("/admin")
+               }
             } catch (error) {
                Cookie.remove("techVoiceToken")
+
                return
             }
          } else {
@@ -64,7 +83,9 @@ const Auth = () => {
          Axios.defaults.headers.common["X-Auth-Token"] = res.data.token
 
          Cookie.set("techVoiceToken", res.data.token)
+         localStorage.setItem("techVoiceToken", res.data.token)
 
+         //  return Router.push("/admin")
          return {
             success: true
          }
