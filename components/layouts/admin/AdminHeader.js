@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react"
 import { Layout, Dropdown, Menu } from "antd"
 import {
-   DownOutlined,
+   CaretDownOutlined,
    MenuFoldOutlined,
    MenuUnfoldOutlined
 } from "@ant-design/icons"
@@ -90,10 +90,15 @@ function AdminHeader({ userData }) {
                className="ant-dropdown-link float-right mr-5"
                onClick={e => e.preventDefault()}
             >
-               {userData.firstName} {userData.lastName} <DownOutlined />
+               {userData.firstName} {userData.lastName} <CaretDownOutlined />
             </a>
          </Dropdown>
-         ,
+         <style global jsx>{`
+            .anticon svg {
+               display: inline-block;
+               margin-bottom: 10px;
+            }
+         `}</style>
       </Header>
    )
 }

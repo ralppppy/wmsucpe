@@ -6,7 +6,7 @@ const { Title, Text } = Typography
 
 function index({ userData }) {
    return (
-      <AdminLayout userData={userData.user}>
+      <>
          <Row gutter={[{ md: 50 }, 20]}>
             <Col md={{ span: 8 }}>
                <Card className="shadow-sm">
@@ -76,7 +76,7 @@ function index({ userData }) {
                </Card>
             </Col>
          </Row>
-      </AdminLayout>
+      </>
    )
 }
 
