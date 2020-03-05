@@ -1,6 +1,6 @@
 import { TabBar, Drawer, List } from "antd-mobile"
 import { Layout } from "antd"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "antd-mobile/dist/antd-mobile.css"
 import {
    DashboardOutlined,
@@ -9,16 +9,29 @@ import {
    MenuUnfoldOutlined,
    MenuFoldOutlined
 } from "@ant-design/icons"
-import Router from "next/router"
+import Router, { withRouter } from "next/router"
 import EClogo from "../brand/ec.jpg"
 
 const { Header } = Layout
 
-const Mobile = ({ children }) => {
+const Mobile = ({ children, router }) => {
    let [selectedTab, setSelectTab] = useState("dashboard")
    let [hidden, setHidden] = useState(false)
    let [fullScreen, setFullScreen] = useState(false)
    let [openNavBar, setOpenNavBar] = useState(false)
+
+   useEffect(() => {
+      switch (router.pathname) {
+         case "/admin":
+            setSelectTab("dashboard")
+            break
+         case "/admin/transaction":
+            setSelectTab("transaction")
+            break
+         default:
+            return
+      }
+   }, [])
 
    const sidebar = (
       <List>
@@ -114,7 +127,7 @@ const Mobile = ({ children }) => {
          ></Drawer>
          <TabBar
             unselectedTintColor="#949494"
-            tintColor="#33A3F4"
+            tintColor="#bb1f2e"
             barTintColor="white"
             hidden={hidden}
          >
@@ -204,4 +217,4 @@ const Mobile = ({ children }) => {
    )
 }
 
-export default Mobile
+export default withRouter(Mobile)
