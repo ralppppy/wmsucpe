@@ -5,7 +5,7 @@ const db = require("./config/database")
 const cors = require("cors")
 require("dotenv").config()
 
-const dev = false //process.env.NODE_ENV !== "production"
+const dev = true //process.env.NODE_ENV !== "production"
 const PORT = process.env.PORT || 3000
 
 const app = next({ dev })
