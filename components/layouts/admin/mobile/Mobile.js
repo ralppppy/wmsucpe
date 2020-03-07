@@ -11,10 +11,11 @@ import {
 } from "@ant-design/icons"
 import Router, { withRouter } from "next/router"
 import EClogo from "../brand/ec.jpg"
+import Cookie from "js-cookie"
 
 const { Header } = Layout
 
-const Mobile = ({ children, router }) => {
+const Mobile = ({ children, router, userData }) => {
    let [selectedTab, setSelectTab] = useState("dashboard")
    let [hidden, setHidden] = useState(false)
    let [fullScreen, setFullScreen] = useState(false)
@@ -33,27 +34,38 @@ const Mobile = ({ children, router }) => {
       }
    }, [])
 
+   const handleLogout = e => {
+      e.preventDefault()
+
+      e.preventDefault()
+
+      Cookie.remove("techVoiceToken")
+      localStorage.removeItem("techVoiceToken")
+      Router.push("/admin/login")
+   }
+
    const sidebar = (
-      <List>
-         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(
-            (i, index) => {
+      <List className="h-100">
+         {[`${userData.firstName} ${userData.lastName}`, "Logout"].map(
+            (menu, index) => {
                if (index === 0) {
                   return (
                      <List.Item
                         key={index}
-                        thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
+                        // thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
                         multipleLine
                      >
-                        Category
+                        {menu}
                      </List.Item>
                   )
                }
                return (
                   <List.Item
                      key={index}
-                     thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
+                     onClick={handleLogout}
+                     //  thumb="https://zos.alipayobjects.com/rmsportal/eOZidTabPoEbPeU.png"
                   >
-                     Category{index}
+                     {menu}
                   </List.Item>
                )
             }
@@ -112,7 +124,7 @@ const Mobile = ({ children, router }) => {
             className="my-drawer"
             style={{
                maxHeight: document.documentElement.clientHeight - 64,
-
+               backgroundColor: "white",
                marginTop: 64
             }}
             enableDragHandle
@@ -206,6 +218,7 @@ const Mobile = ({ children, router }) => {
             .my-drawer .am-drawer-sidebar .am-list {
                width: 200px;
                padding: 0;
+               background-color: white;
             }
 
             .am-drawer.am-drawer-left .am-drawer-draghandle {

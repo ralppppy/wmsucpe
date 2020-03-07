@@ -5,7 +5,7 @@ import Head from "next/head"
 
 const { Title, Text } = Typography
 
-function index({ userData }) {
+function index() {
    return (
       <>
          <Head>

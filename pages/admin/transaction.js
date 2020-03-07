@@ -5,7 +5,7 @@ import Head from "next/head"
 
 const { Title } = Typography
 
-function transaction({ userData, logo }) {
+function transaction() {
    return (
       <>
          <Head>

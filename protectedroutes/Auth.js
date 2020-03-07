@@ -13,10 +13,8 @@ const Auth = () => {
 
       let token
       if (req || res) {
-         console.log("SSR")
          token = cookies.techVoiceToken
       } else {
-         console.log("CSR")
          token = cookies.techVoiceToken
          //  token = localStorage.getItem("techVoiceToken")
       }
