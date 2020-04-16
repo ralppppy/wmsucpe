@@ -1,29 +1,40 @@
 import { Typography, Button, Row, Col } from "antd"
-
+import { useMediaQuery } from "react-responsive"
+import { isMobile } from "react-device-detect"
 const { Title, Text } = Typography
 
 function HomeHeroSection() {
+   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" })
    return (
       <>
-         <div className="hero-section container">
-            <Row className="h-100 ">
+         <div className="hero-section container ">
+            <Row className="h-100">
                <Col md={{ span: 12 }} className="d-flex align-items-center">
-                  <Row>
-                     <Title className="text-center text-title">
-                        WELCOME TO OUR PAGE!
+                  <div style={{ padding: 10 }}>
+                     <Title
+                        className={`text-title ${
+                           (isTabletOrMobile || isMobile) && "text-center"
+                        }`}
+                     >
+                        WELCOME!
                      </Title>
-
-                     <Title level={2}>
+                     <Title level={3}>
                         Do you have what it takes to became a computer engineer?
                      </Title>
+
                      <br />
-                     <Button className="register-button" type="primary">
+                     <Button
+                        className={`register-button text-center ${
+                           (isTabletOrMobile || isMobile) && "w-100"
+                        }`}
+                        type="primary"
+                     >
                         <Text className="button-text">Pre-Register Now!</Text>
                      </Button>
-                  </Row>
+                  </div>
                </Col>
                <Col className="d-flex align-items-center" md={{ span: 12 }}>
-                  <img width={600} src="/brand/2968383@2x.png" />
+                  <img style={{ width: "100%" }} src="/brand/2968383@2x.png" />
                </Col>
             </Row>
          </div>
@@ -33,10 +44,54 @@ function HomeHeroSection() {
             body,
             div#__next {
                height: 100%;
+               width: 100%;
             }
+
             .hero-section {
-               height: 80%;
+               height: 65%;
+               padding: 0;
             }
+
+            /* Extra small devices (phones, 600px and down) */
+            @media only screen and (max-width: 600px) {
+               .hero-section {
+                  height: 40%;
+                  padding: 0;
+               }
+            }
+
+            /* Small devices (portrait tablets and large phones, 600px and up) */
+            @media only screen and (min-width: 600px) {
+               .hero-section {
+                  height: 40%;
+                  padding: 0;
+               }
+            }
+
+            /* Medium devices (landscape tablets, 768px and up) */
+            @media only screen and (min-width: 768px) {
+               .hero-section {
+                  height: 40%;
+                  padding: 0;
+               }
+            }
+
+            /* Large devices (laptops/desktops, 992px and up) */
+            @media only screen and (min-width: 992px) {
+               .hero-section {
+                  height: 40%;
+                  padding: 0;
+               }
+            }
+
+            /* Extra large devices (large laptops and desktops, 1200px and up) */
+            @media only screen and (min-width: 1200px) {
+               .hero-section {
+                  height: 65%;
+                  padding: 0;
+               }
+            }
+
             .ant-typography h1,
             h1.ant-typography {
                margin-bottom: -0.5em;
