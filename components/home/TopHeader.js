@@ -54,40 +54,42 @@ function TopHeader() {
         }`}
         mode="horizontal"
       >
-        {isTabletOrMobileDevice ? (
-          <Menu.Item className="float-right" key={-1}>
-            <MenuFoldOutlined
-              onClick={handleDrawer}
-              style={{ fontSize: 20, marginRight: 6 }}
-            />
+        <Menu.Item className="float-right is-active" key={-1}>
+          <MenuFoldOutlined
+            onClick={handleDrawer}
+            style={{ fontSize: 20, marginRight: 6 }}
+          />
+        </Menu.Item>
+
+        {MENU.map((menu, index) => (
+          <Menu.Item className="float-right is-active-desktop" key={index}>
+            <Link
+              style={{
+                color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
+                borderBottom: menu === activeClass ? "2px solid #1890ff" : "",
+                paddingBottom: "14px",
+              }}
+              to={menu}
+              spy={true}
+              smooth={true}
+              duration={500}
+              offset={-50}
+            >
+              {menu}
+            </Link>
           </Menu.Item>
-        ) : (
-          MENU.map((menu, index) => (
-            <Menu.Item className="float-right is-active" key={index}>
-              <Link
-                style={{
-                  color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
-                  borderBottom: menu === activeClass ? "2px solid #1890ff" : "",
-                  paddingBottom: "14px",
-                }}
-                to={menu}
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-50}
-              >
-                {menu}
-              </Link>
-            </Menu.Item>
-          ))
-        )}
+        ))}
+
         <div className="float-left ml-2">
           <img src="/brand/brand@2x.png" width={50} />
-          {!isTabletOrMobileDevice && (
-            <Text style={{ fontSize: 20, marginLeft: 6, marginTop: 10 }} strong>
-              WMSU Computer Engineering
-            </Text>
-          )}
+
+          <Text
+            className="title-is-active-desktop"
+            style={{ fontSize: 20, marginLeft: 6, marginTop: 10 }}
+            strong
+          >
+            WMSU Computer Engineering
+          </Text>
         </div>
       </Menu>
 
@@ -163,36 +165,80 @@ function TopHeader() {
 
         /* Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
-          .is-active {
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active {
+            display: block;
+          }
+
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active-desktop {
+            display: none;
+          }
+
+          span.ant-typography.is-active-desktop {
+            display: none;
+          }
+
+          span.ant-typography.title-is-active-desktop {
             display: none;
           }
         }
 
         /* Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
-          .is-active {
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active {
+            display: block;
+          }
+
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active-desktop {
+            display: none;
+          }
+
+          span.ant-typography.is-active-desktop {
+            display: none;
+          }
+
+          span.ant-typography.title-is-active-desktop {
             display: none;
           }
         }
 
         /* Medium devices (landscape tablets, 768px and up) */
         @media only screen and (min-width: 768px) {
-          .is-active {
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active {
             display: none;
+          }
+
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active-desktop {
+            display: block;
+          }
+          span.ant-typography.title-is-active-desktop {
+            display: initial;
           }
         }
 
         /* Large devices (laptops/desktops, 992px and up) */
         @media only screen and (min-width: 992px) {
-          .is-active {
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active {
+            display: none;
+          }
+
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active-desktop {
             display: block;
+          }
+          span.ant-typography.title-is-active-desktop {
+            display: initial;
           }
         }
 
         /* Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
-          .is-active {
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active {
+            display: none;
+          }
+          li.ant-menu-item.ant-menu-item-only-child.float-right.is-active-desktop {
             display: block;
+          }
+          span.ant-typography.title-is-active-desktop {
+            display: initial;
           }
         }
 
