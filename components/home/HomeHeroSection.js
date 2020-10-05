@@ -1,6 +1,6 @@
 import { Typography, Button, Row, Col } from "antd";
 import { useMediaQuery } from "react-responsive";
-import { isMobile } from "react-device-detect";
+//import { isMobile } from "react-device-detect";
 const { Title, Text } = Typography;
 
 function HomeHeroSection() {
@@ -9,31 +9,15 @@ function HomeHeroSection() {
     <>
       <div className="hero-section container mt-5">
         <Row className="mt-5">
-          <Col
-            md={{ span: 12 }}
-            className={`d-flex align-items-center ${
-              isTabletOrMobile && "text-center"
-            }`}
-          >
+          <Col md={{ span: 12 }} className="d-flex align-items-center">
             <div style={{ padding: 10 }}>
-              <Title
-                className={`text-title ${
-                  (isTabletOrMobile || isMobile) && "text-center"
-                }`}
-              >
-                WELCOME!
-              </Title>
+              <Title className={"text-title"}>WELCOME!</Title>
               <Title level={3}>
                 Do you have what it takes to became a computer engineer?
               </Title>
 
               <br />
-              <Button
-                className={`register-button text-center ${
-                  (isTabletOrMobile || isMobile) && "w-100"
-                }`}
-                type="primary"
-              >
+              <Button className={`register-button text-center`} type="primary">
                 <Text className="button-text">Pre-Register Now!</Text>
               </Button>
             </div>
@@ -55,6 +39,7 @@ function HomeHeroSection() {
         .hero-section {
           height: 65%;
           padding: 0;
+          text-align: left;
         }
 
         /* Extra small devices (phones, 600px and down) */
@@ -62,6 +47,7 @@ function HomeHeroSection() {
           .hero-section {
             height: 40%;
             padding: 0;
+            text-align: center;
           }
         }
 

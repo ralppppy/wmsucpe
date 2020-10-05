@@ -55,7 +55,7 @@ function TopHeader() {
         mode="horizontal"
       >
         {isTabletOrMobileDevice ? (
-          <Menu.Item className="float-right" key="1">
+          <Menu.Item className="float-right" key={-1}>
             <MenuFoldOutlined
               onClick={handleDrawer}
               style={{ fontSize: 20, marginRight: 6 }}
@@ -98,18 +98,20 @@ function TopHeader() {
         onClose={handleDrawer}
         visible={drawerVisible}
       >
-        {MOBILE_MENU.map((m) => (
-          <p key={m}>
+        {MOBILE_MENU.map((menu) => (
+          <p key={menu}>
             <Link
               onClick={handleDrawer}
-              activeClass="active"
-              to={m}
+              style={{
+                color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
+              }}
+              to={menu}
               spy={true}
               smooth={true}
               offset={-50}
               duration={500}
             >
-              {m}
+              {menu}
             </Link>
           </p>
         ))}
@@ -160,7 +162,7 @@ function TopHeader() {
         }
 
         .active {
-          color: red;
+          color: #1890ff;
         }
       `}</style>
     </Affix>

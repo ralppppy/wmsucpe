@@ -11,12 +11,12 @@ function MyApp({ Component, pageProps }) {
         <>
           <BrowserView>
             <AdminLayout userData={pageProps.userData.user}>
-              <Component {...pageProps} />
+              <Component {...pageProps} isMobile={false} />
             </AdminLayout>
           </BrowserView>
           <MobileView>
             <Mobile userData={pageProps.userData.user}>
-              <Component {...pageProps} />
+              <Component {...pageProps} isMobile={true} />
             </Mobile>
           </MobileView>
         </>
