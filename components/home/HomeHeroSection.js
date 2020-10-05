@@ -23,7 +23,11 @@ function HomeHeroSection() {
             </div>
           </Col>
           <Col className="d-flex align-items-center" md={{ span: 12 }}>
-            <img style={{ width: "100%" }} src="/brand/2968383@2x.png" />
+            <img
+              loading="lazy"
+              style={{ width: "100%" }}
+              src="/brand/2968383@2x.png"
+            />
           </Col>
         </Row>
       </div>

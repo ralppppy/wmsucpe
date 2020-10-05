@@ -63,7 +63,7 @@ function TopHeader() {
           </Menu.Item>
         ) : (
           MENU.map((menu, index) => (
-            <Menu.Item className="float-right" key={index}>
+            <Menu.Item className="float-right is-active" key={index}>
               <Link
                 style={{
                   color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
@@ -159,6 +159,41 @@ function TopHeader() {
         }
         .link-style {
           font-size: 15px;
+        }
+
+        /* Extra small devices (phones, 600px and down) */
+        @media only screen and (max-width: 600px) {
+          .is-active {
+            display: none;
+          }
+        }
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media only screen and (min-width: 600px) {
+          .is-active {
+            display: none;
+          }
+        }
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (min-width: 768px) {
+          .is-active {
+            display: none;
+          }
+        }
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media only screen and (min-width: 992px) {
+          .is-active {
+            display: block;
+          }
+        }
+
+        /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media only screen and (min-width: 1200px) {
+          .is-active {
+            display: block;
+          }
         }
 
         .active {
