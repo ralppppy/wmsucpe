@@ -6,7 +6,8 @@
     "server": "nodemon server/server.js",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build"
   },
   "proxy": "http://localhost:3000",
   "dependencies": {
