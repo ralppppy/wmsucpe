@@ -1,35 +1,30 @@
-import AdminLayout from "../components/layouts/admin/AdminLayout"
-import {
-   BrowserView,
-   MobileView,
-   isBrowser,
-   isMobile
-} from "react-device-detect"
-import Mobile from "../components/layouts/admin/mobile/Mobile"
+import AdminLayout from "../components/layouts/admin/AdminLayout";
+import { BrowserView, MobileView } from "react-device-detect";
+import Mobile from "../components/layouts/admin/mobile/Mobile";
 
 // import App from 'next/app'
 
 function MyApp({ Component, pageProps }) {
-   return (
-      <>
-         {pageProps.userData ? (
-            <>
-               <BrowserView>
-                  <AdminLayout userData={pageProps.userData.user}>
-                     <Component {...pageProps} />
-                  </AdminLayout>
-               </BrowserView>
-               <MobileView>
-                  <Mobile userData={pageProps.userData.user}>
-                     <Component {...pageProps} />
-                  </Mobile>
-               </MobileView>
-            </>
-         ) : (
-            <Component {...pageProps} />
-         )}
-      </>
-   )
+  return (
+    <>
+      {pageProps.userData ? (
+        <>
+          <BrowserView>
+            <AdminLayout userData={pageProps.userData.user}>
+              <Component {...pageProps} />
+            </AdminLayout>
+          </BrowserView>
+          <MobileView>
+            <Mobile userData={pageProps.userData.user}>
+              <Component {...pageProps} />
+            </Mobile>
+          </MobileView>
+        </>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
+  );
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -45,13 +40,13 @@ function MyApp({ Component, pageProps }) {
 // }
 
 MyApp.getInitialProps = async ({ Component, router, ctx }) => {
-   let pageProps = {}
+  let pageProps = {};
 
-   if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-   }
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
 
-   return { pageProps }
-}
+  return { pageProps };
+};
 
-export default MyApp
+export default MyApp;
