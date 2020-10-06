@@ -1,10 +1,8 @@
 import { Typography, Button, Row, Col } from "antd";
-import { useMediaQuery } from "react-responsive";
-//import { isMobile } from "react-device-detect";
+
 const { Title, Text } = Typography;
 
 function HomeHeroSection() {
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   return (
     <>
       <div className="hero-section container mt-5">

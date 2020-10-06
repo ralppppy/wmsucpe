@@ -1,35 +1,55 @@
 import Head from "next/head";
-import TopHeader from "../components/home/TopHeader";
-import HomeHeroSection from "../components/home/HomeHeroSection";
-import { Row, Col, Typography } from "antd";
-import LearnSkills from "../components/home/LearnSkills";
-import NewsSection from "../components/home/NewsSection";
+import { Row, Col } from "antd";
+
+import {
+  TopHeader,
+  HomeHeroSection,
+  LearnSkills,
+  NewsSection,
+  MapSection,
+} from "../components/home";
 
 import { Element } from "react-scroll";
+import { useRef } from "react";
 
 const Home = () => {
+  const newsRef = useRef();
+  const learnRef = useRef();
+  const mapRef = useRef();
+  const topHeaderRef = useRef();
+
   return (
     <>
       <Head>
         <title>WMSU - Computer Engineering</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+
       <Row>
         <Col className="w-100" md={{ span: 24 }}>
           <div className="d-flex flex-column bd-highlight mb-3">
-            <Element name="Home" className="element">
-              <TopHeader />
-            </Element>
+            <div ref={topHeaderRef} id="Home">
+              <TopHeader
+                newsRef={newsRef}
+                learnRef={learnRef}
+                mapRef={mapRef}
+                topHeaderRef={topHeaderRef}
+              />
+            </div>
 
             <HomeHeroSection />
 
-            <Element name="Learn Skills" className="element">
+            <div ref={learnRef} id="Learn Skills">
               <LearnSkills />
-            </Element>
+            </div>
 
-            <Element name="News" className="element">
+            <div ref={newsRef} id="News">
               <NewsSection />
-            </Element>
+            </div>
+
+            <div ref={mapRef} id="Location">
+              <MapSection />
+            </div>
           </div>
         </Col>
       </Row>
@@ -47,6 +67,8 @@ const Home = () => {
         div#__next {
           height: 100%;
           width: 100%;
+          scroll-behavior: smooth;
+          scroll-padding-top: 50px;
         }
       `}</style>
     </>

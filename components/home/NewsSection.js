@@ -1,4 +1,4 @@
-import { Row, Col, Typography, Card, Avatar } from "antd";
+import { Row, Col, Typography, Card } from "antd";
 
 const { Meta } = Card;
 
@@ -6,7 +6,7 @@ const { Title, Text } = Typography;
 
 function NewsSection() {
   return (
-    <div className="mb-3 p-3">
+    <div className=" p-3">
       <Title strong className="text-center mt-3" level={2}>
         News
       </Title>

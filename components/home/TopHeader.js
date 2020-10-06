@@ -6,23 +6,54 @@ import { Link, Events, scrollSpy } from "react-scroll";
 
 const { Text } = Typography;
 
-function TopHeader() {
+function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
   let [transparent, setTransparent] = useState(false);
-  let [activeClass, setActiveClass] = useState("Home");
 
-  let MENU = ["Login", "Location", "News", "Learn Skills", "Home"];
-  let MOBILE_MENU = ["Home", "Learn Skills", "News", "Location", "Login"];
+  let MENU = [
+    "Login",
+    "Contact Us",
+    "About",
+    "Location",
+    "News",
+    "Learn Skills",
+    "Home",
+  ];
+  let MOBILE_MENU = [
+    "Home",
+    "Learn Skills",
+    "News",
+    "Location",
+    "About",
+    "Contact Us",
+    "Login",
+  ];
 
-  let [drawerVisible, setDrawerVisible] = useState(false);
-  const isTabletOrMobileDevice = useMediaQuery({
-    query: "(max-device-width: 1224px)",
-  });
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [menuActive, setMenuActive] = useState("Home");
 
   useEffect(() => {
-    Events.scrollEvent.register("begin", function (to, element) {
-      console.log(to, element);
-      setActiveClass(to);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        console.log(entries[0]);
+        console.log(entries[0].target.id);
+
+        if (entries[0].isIntersecting) {
+          setMenuActive(entries[0].target.id);
+          history.pushState({}, null, `#${entries[0].target.id}`);
+        }
+      },
+      { threshold: 0.7 }
+    );
+    [
+      topHeaderRef.current,
+      learnRef.current,
+      newsRef.current,
+      mapRef.current,
+    ].forEach((ref) => {
+      observer.observe(ref);
     });
+
+    Events.scrollEvent.register("begin", function (to, element) {});
 
     Events.scrollEvent.register("end", function (to, element) {});
     scrollSpy.update();
@@ -40,7 +71,7 @@ function TopHeader() {
       Events.scrollEvent.remove("begin");
       Events.scrollEvent.remove("end");
     };
-  }, []);
+  }, [newsRef, learnRef]);
 
   const handleDrawer = () => {
     setDrawerVisible((prev) => !prev);
@@ -62,21 +93,24 @@ function TopHeader() {
         </Menu.Item>
 
         {MENU.map((menu, index) => (
-          <Menu.Item className="float-right is-active-desktop" key={index}>
-            <Link
+          <Menu.Item
+            active={false}
+            className="float-right is-active-desktop"
+            key={index}
+          >
+            <a
               style={{
-                color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
-                borderBottom: menu === activeClass ? "2px solid #1890ff" : "",
-                paddingBottom: "14px",
+                color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
+                borderBottom:
+                  menuActive === menu
+                    ? "2px solid #59affd"
+                    : " 0px solid white",
+                paddingBottom: 10,
               }}
-              to={menu}
-              spy={true}
-              smooth={true}
-              duration={500}
-              offset={-50}
+              href={`#${menu}`}
             >
               {menu}
-            </Link>
+            </a>
           </Menu.Item>
         ))}
 
@@ -104,9 +138,6 @@ function TopHeader() {
           <p key={menu}>
             <Link
               onClick={handleDrawer}
-              style={{
-                color: menu === activeClass ? "#1890ff" : "rgba(0,0,0,.85)",
-              }}
               to={menu}
               spy={true}
               smooth={true}
@@ -126,6 +157,14 @@ function TopHeader() {
           padding: 10px;
           padding-left: 25px;
         }
+
+        :target::before {
+          content: "";
+          display: block;
+          height: 100px; /* fixed header height*/
+          margin: -100px 0 0; /* negative fixed header height */
+        }
+
         .ant-page-header {
           -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -241,9 +280,16 @@ function TopHeader() {
             display: initial;
           }
         }
-
-        .active {
-          color: #1890ff;
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover {
+          color: rgba(249, 249, 249, 0.9);
+          border-bottom: 0px solid white;
         }
       `}</style>
     </Affix>
