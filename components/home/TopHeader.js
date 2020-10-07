@@ -283,15 +283,18 @@ function TopHeader({
             display: initial;
           }
         }
-        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
-        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
-        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
-        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
+
         .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
         .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
         .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
         .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover {
           color: rgba(249, 249, 249, 0.9);
+          border-bottom: 0px solid white;
+        }
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
+          color: #4d4d4d;
           border-bottom: 0px solid white;
         }
       `}</style>

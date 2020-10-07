@@ -8,7 +8,7 @@ function ContactUsSection() {
 
   return (
     <div className="mb-3 p-3">
-      <div className="container text-center">
+      <div className="container text-center ">
         <Row gutter={[32]}>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
             <Title strong className="mt-3" level={2}>
@@ -20,7 +20,7 @@ function ContactUsSection() {
               src="/brand/contact.jpg"
             />
           </Col>
-          <Col md={{ span: 12 }} sm={{ span: 24 }}>
+          <Col className="w-100" md={{ span: 12 }} sm={{ span: 24 }}>
             <Card className="shadow-sm mt-3">
               <Form
                 size="large"
