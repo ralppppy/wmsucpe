@@ -29,7 +29,7 @@ function AboutUsSection() {
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
             <iframe
               className="mt-3"
-              width="560"
+              width="100%"
               height="315"
               src="https://www.youtube.com/embed/j1ZRyw7OtZs"
               frameborder="0"
