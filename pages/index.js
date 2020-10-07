@@ -6,7 +6,8 @@ import {
   HomeHeroSection,
   LearnSkills,
   NewsSection,
-  MapSection,
+  AboutUsSection,
+  ContactUsSection,
 } from "../components/home";
 
 import { Element } from "react-scroll";
@@ -16,6 +17,8 @@ const Home = () => {
   const newsRef = useRef();
   const learnRef = useRef();
   const mapRef = useRef();
+  const contactUsRef = useRef();
+  const aboutRef = useRef();
   const topHeaderRef = useRef();
 
   return (
@@ -32,8 +35,9 @@ const Home = () => {
               <TopHeader
                 newsRef={newsRef}
                 learnRef={learnRef}
-                mapRef={mapRef}
+                aboutRef={aboutRef}
                 topHeaderRef={topHeaderRef}
+                contactUsRef={contactUsRef}
               />
             </div>
 
@@ -47,8 +51,12 @@ const Home = () => {
               <NewsSection />
             </div>
 
-            <div ref={mapRef} id="Location">
-              <MapSection />
+            <div ref={aboutRef} id="About">
+              <AboutUsSection />
+            </div>
+
+            <div ref={contactUsRef} id="Contact Us">
+              <ContactUsSection />
             </div>
           </div>
         </Col>

@@ -4,6 +4,8 @@ import LearnSkills from "./LearnSkills";
 import MapSection from "./MapSection";
 import NewsSection from "./NewsSection";
 import TopHeader from "./TopHeader";
+import AboutUsSection from "./AboutUsSection";
+import ContactUsSection from "./ContactUsSection";
 
 export {
   HomeCard,
@@ -12,4 +14,6 @@ export {
   MapSection,
   NewsSection,
   TopHeader,
+  AboutUsSection,
+  ContactUsSection,
 };

@@ -1,19 +1,24 @@
 import { Typography, Affix, Menu, Drawer } from "antd";
 import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { Link, Events, scrollSpy } from "react-scroll";
 
 const { Text } = Typography;
 
-function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
+function TopHeader({
+  newsRef,
+  learnRef,
+  aboutRef,
+  topHeaderRef,
+  contactUsRef,
+}) {
   let [transparent, setTransparent] = useState(false);
 
   let MENU = [
     "Login",
+    "Location",
     "Contact Us",
     "About",
-    "Location",
     "News",
     "Learn Skills",
     "Home",
@@ -22,9 +27,9 @@ function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
     "Home",
     "Learn Skills",
     "News",
-    "Location",
     "About",
     "Contact Us",
+    "Location",
     "Login",
   ];
 
@@ -34,9 +39,6 @@ function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log(entries[0]);
-        console.log(entries[0].target.id);
-
         if (entries[0].isIntersecting) {
           setMenuActive(entries[0].target.id);
           history.pushState({}, null, `#${entries[0].target.id}`);
@@ -48,7 +50,8 @@ function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
       topHeaderRef.current,
       learnRef.current,
       newsRef.current,
-      mapRef.current,
+      aboutRef.current,
+      contactUsRef.current,
     ].forEach((ref) => {
       observer.observe(ref);
     });
@@ -71,7 +74,7 @@ function TopHeader({ newsRef, learnRef, mapRef, topHeaderRef }) {
       Events.scrollEvent.remove("begin");
       Events.scrollEvent.remove("end");
     };
-  }, [newsRef, learnRef]);
+  }, [newsRef, learnRef, aboutRef, topHeaderRef, contactUsRef]);
 
   const handleDrawer = () => {
     setDrawerVisible((prev) => !prev);
