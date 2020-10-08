@@ -9,28 +9,26 @@ function FooterSection() {
   return (
     <>
       <div className="footer mt-5 p-3 h-100">
-        <Row className="footer-header-title" gutter={[32, 32]}>
-          <Col md={{ span: 24 }} sm={{ span: 24 }}>
-            <Title className="text-white text-center" level={3}>
-              Visit our Social Links
-            </Title>
-            <div className="d-flex align-items-center justify-content-center ">
-              <SocialIcon
-                fgColor="#fff"
-                url="https://www.facebook.com/wmsucomputerengineering/"
-              />
-              <SocialIcon
-                className="ml-3 mr-3"
-                fgColor="#fff"
-                url="https://twitter.com/jaketrent"
-              />
-              <SocialIcon
-                fgColor="#fff"
-                url="https://www.youtube.com/channel/UCTY6fxtqkF_dtGanIhZHHVg"
-              />
-            </div>
-          </Col>
-          {/* <Col md={{ span: 8 }} sm={{ span: 24 }}>
+        <Title className="text-white text-center" level={3}>
+          Visit our Social Links
+        </Title>
+        <div className="d-flex align-items-center justify-content-center mb-5">
+          <SocialIcon
+            fgColor="#fff"
+            url="https://www.facebook.com/wmsucomputerengineering/"
+          />
+          <SocialIcon
+            className="ml-3 mr-3"
+            fgColor="#fff"
+            url="https://twitter.com/jaketrent"
+          />
+          <SocialIcon
+            fgColor="#fff"
+            url="https://www.youtube.com/channel/UCTY6fxtqkF_dtGanIhZHHVg"
+          />
+        </div>
+
+        {/* <Col md={{ span: 8 }} sm={{ span: 24 }}>
             <Title className="text-center text-white" level={3}>
               Location
             </Title>
@@ -76,7 +74,6 @@ function FooterSection() {
             </ul>
           </Col>
        */}
-        </Row>
       </div>
       <style jsx>
         {`
