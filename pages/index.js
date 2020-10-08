@@ -9,6 +9,7 @@ import {
   AboutUsSection,
   ContactUsSection,
   FooterSection,
+  MapSection,
 } from "../components/home";
 
 import { Element } from "react-scroll";
@@ -27,6 +28,10 @@ const Home = () => {
       <Head>
         <title>WMSU - Computer Engineering</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
       </Head>
 
       <Row>
@@ -39,6 +44,7 @@ const Home = () => {
                 aboutRef={aboutRef}
                 topHeaderRef={topHeaderRef}
                 contactUsRef={contactUsRef}
+                mapRef={mapRef}
               />
             </div>
 
@@ -58,6 +64,10 @@ const Home = () => {
 
             <div ref={contactUsRef} id="Contact Us">
               <ContactUsSection />
+            </div>
+
+            <div ref={mapRef} id="Location">
+              <MapSection />
             </div>
           </div>
         </Col>

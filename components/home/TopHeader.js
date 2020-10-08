@@ -11,6 +11,7 @@ function TopHeader({
   aboutRef,
   topHeaderRef,
   contactUsRef,
+  mapRef,
 }) {
   let [transparent, setTransparent] = useState(false);
 
@@ -52,6 +53,7 @@ function TopHeader({
       newsRef.current,
       aboutRef.current,
       contactUsRef.current,
+      mapRef.current,
     ].forEach((ref) => {
       observer.observe(ref);
     });
@@ -74,7 +76,7 @@ function TopHeader({
       Events.scrollEvent.remove("begin");
       Events.scrollEvent.remove("end");
     };
-  }, [newsRef, learnRef, aboutRef, topHeaderRef, contactUsRef]);
+  }, [newsRef, learnRef, aboutRef, topHeaderRef, contactUsRef, mapRef]);
 
   const handleDrawer = () => {
     setDrawerVisible((prev) => !prev);
