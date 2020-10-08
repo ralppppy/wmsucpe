@@ -8,6 +8,7 @@ import {
   NewsSection,
   AboutUsSection,
   ContactUsSection,
+  FooterSection,
 } from "../components/home";
 
 import { Element } from "react-scroll";
@@ -30,7 +31,7 @@ const Home = () => {
 
       <Row>
         <Col className="w-100" md={{ span: 24 }}>
-          <div className="d-flex flex-column bd-highlight mb-3">
+          <div className="d-flex flex-column bd-highlight mb-3 justify-space-between">
             <div ref={topHeaderRef} id="Home">
               <TopHeader
                 newsRef={newsRef}
@@ -61,7 +62,9 @@ const Home = () => {
           </div>
         </Col>
       </Row>
-
+      <div id="Footer">
+        <FooterSection />
+      </div>
       <style global jsx>{`
         * {
           margin: 0;

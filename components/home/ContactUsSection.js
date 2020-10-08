@@ -7,7 +7,7 @@ function ContactUsSection() {
   const [form] = Form.useForm();
 
   return (
-    <div className="mb-3 p-3">
+    <div className="mb-3 p-3 mt-3">
       <div className="container text-center ">
         <Row gutter={[32]}>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
