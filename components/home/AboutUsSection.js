@@ -8,9 +8,11 @@ function AboutUsSection() {
       <div className="container mt-3 mb-3">
         <Row gutter={[32]}>
           <Col md={{ span: 12 }} sm={{ span: 24 }}>
-            <Title strong className="mt-3" level={2}>
-              About Us
-            </Title>
+            <div className="text-center">
+              <Title strong className="mt-3" level={2}>
+                About Us
+              </Title>
+            </div>
             <Paragraph>
               Magna magna voluptate occaecat pariatur laborum est sunt
               excepteur. Adipisicing ullamco laborum et ullamco ullamco officia
