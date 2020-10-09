@@ -55,7 +55,6 @@ function index() {
         </Col>
         <Col md={{ span: 8 }}>
           <Card className="shadow-sm">
-         
             <Text strong>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
