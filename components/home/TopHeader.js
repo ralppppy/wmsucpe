@@ -16,7 +16,6 @@ function TopHeader({
   let [transparent, setTransparent] = useState(false);
 
   let MENU = [
-    "Login",
     "Location",
     "Contact Us",
     "About",
@@ -31,7 +30,6 @@ function TopHeader({
     "About",
     "Contact Us",
     "Location",
-    "Login",
   ];
 
   const [drawerVisible, setDrawerVisible] = useState(false);
