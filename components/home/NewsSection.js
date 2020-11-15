@@ -6,6 +6,7 @@ import striptags from "striptags";
 //import Link from "next/link";
 
 import { AppContext } from "../../context/AppContext";
+import dayjs from "dayjs";
 
 const { Meta } = Card;
 
@@ -35,7 +36,7 @@ function NewsSection() {
       </Title>
       <div className="container">
         <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
-          <Col md={{ span: 9 }} sm={{ span: 24 }}>
+          {/* <Col md={{ span: 9 }} sm={{ span: 24 }}>
             <Card
               className="rounded shadow-sm"
               cover={
@@ -60,19 +61,30 @@ function NewsSection() {
                   </Tooltip>
                 }
                 description={
-                  <Text>
-                    {striptags(news[0]?.newsContent).length > 105
-                      ? striptags(news[0]?.newsContent).substr(0, 104) + "..."
-                      : striptags(news[0]?.newsContent)}
-                  </Text>
+                  <>
+                    <Text strong={true} type="secondary">
+                      Date Created
+                    </Text>
+                    <br />
+                    <Text type="secondary">
+                      {dayjs(news[0]?.createdAt).format(
+                        "MMMM DD, YYYY, hh:mm a"
+                      )}
+                    </Text>
+                  </>
+                  // <Text>
+                  //   {striptags(news[0]?.newsContent).length > 105
+                  //     ? striptags(news[0]?.newsContent).substr(0, 104) + "..."
+                  //     : striptags(news[0]?.newsContent)}
+                  // </Text>
                 }
               />
             </Card>
-          </Col>
-          <Col md={{ span: 15 }} sm={{ span: 24 }}>
+          </Col> */}
+          <Col md={{ span: 24 }} sm={{ span: 24 }}>
             <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
               {news.map((news, index) => (
-                <Col key={index} md={{ span: 8 }} sm={{ span: 24 }}>
+                <Col key={index} md={{ span: 6 }} sm={{ span: 24 }}>
                   <Card
                     className="rounded shadow-sm"
                     key={index}
@@ -98,11 +110,22 @@ function NewsSection() {
                         </Tooltip>
                       }
                       description={
-                        <Text>
-                          {striptags(news.newsContent).length > 21
-                            ? striptags(news.newsContent).substr(0, 20) + "..."
-                            : striptags(news.newsContent)}
-                        </Text>
+                        <>
+                          <small className="font-weight-bold">
+                            Date Created{" "}
+                          </small>
+                          <br />
+                          <small>
+                            {dayjs(news[0]?.createdAt).format(
+                              "MMMM DD, YYYY, hh:mm a"
+                            )}
+                          </small>
+                        </>
+                        // <Text>
+                        //   {striptags(news.newsContent).length > 21
+                        //     ? striptags(news.newsContent).substr(0, 20) + "..."
+                        //     : striptags(news.newsContent)}
+                        // </Text>
                       }
                     />
                   </Card>
