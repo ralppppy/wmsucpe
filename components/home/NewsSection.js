@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Row, Col, Typography, Card } from "antd";
+import { Row, Col, Typography, Card, Tooltip } from "antd";
 import Axios from "axios";
 import striptags from "striptags";
 
@@ -45,11 +45,20 @@ function NewsSection() {
                 />
               }
               actions={[
-                <a href={"/news/" + news[0]?.newsUrlSlug}>Read More</a>,
+                <a
+                  style={{ color: "#1890ff" }}
+                  href={"/news/" + news[0]?.newsUrlSlug}
+                >
+                  Read More
+                </a>,
               ]}
             >
               <Meta
-                title={news[0]?.newsTitle}
+                title={
+                  <Tooltip placement="topLeft" title={news[0]?.newsTitle}>
+                    {news[0]?.newsTitle}
+                  </Tooltip>
+                }
                 description={
                   <Text>
                     {striptags(news[0]?.newsContent).length > 105
@@ -74,14 +83,20 @@ function NewsSection() {
                       />
                     }
                     actions={[
-                      <a href={"/news/" + news.newsUrlSlug}>Read More</a>,
-                      // <a shallow={true} href={"/news/" + news.newsUrlSlug}>
-                      //   Read More
-                      // </a>,
+                      <a
+                        style={{ color: "#1890ff" }}
+                        href={"/news/" + news.newsUrlSlug}
+                      >
+                        Read More
+                      </a>,
                     ]}
                   >
                     <Meta
-                      title={news.newsTitle}
+                      title={
+                        <Tooltip placement="topLeft" title={news.newsTitle}>
+                          {news.newsTitle}
+                        </Tooltip>
+                      }
                       description={
                         <Text>
                           {striptags(news.newsContent).length > 21

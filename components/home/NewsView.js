@@ -27,6 +27,7 @@ function NewsView() {
   return (
     <div className="container mt-5">
       <Title className="font-weight-bolder">{singleNewsData?.newsTitle}</Title>
+
       <Text strong={true}>Date Created: </Text>
       <Text>
         {dayjs(singleNewsData?.createdAt).format("MMMM DD, YYYY, hh:mm a")}{" "}
