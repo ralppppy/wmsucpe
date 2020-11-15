@@ -1,18 +1,19 @@
-import React, { createContext, useState } from "react"
+import React, { createContext, useState } from "react";
 
-const LayoutContext = createContext()
+const LayoutContext = createContext();
 
 function LayoutContextProvider({ children }) {
-   let [collapsed, setCollapsed] = useState(false)
-   let [userData, setUserData] = useState("")
+  let [collapsed, setCollapsed] = useState(false);
+  let [userData, setUserData] = useState("");
+  const PROXY = "http://localhost:8080";
 
-   return (
-      <LayoutContext.Provider
-         value={{ collapsed, setCollapsed, userData, setUserData }}
-      >
-         {children}
-      </LayoutContext.Provider>
-   )
+  return (
+    <LayoutContext.Provider
+      value={{ collapsed, setCollapsed, userData, setUserData, PROXY }}
+    >
+      {children}
+    </LayoutContext.Provider>
+  );
 }
 
-export { LayoutContextProvider, LayoutContext }
+export { LayoutContextProvider, LayoutContext };

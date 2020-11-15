@@ -7,6 +7,7 @@ import TopHeader from "./TopHeader";
 import AboutUsSection from "./AboutUsSection";
 import ContactUsSection from "./ContactUsSection";
 import FooterSection from "./FooterSection";
+import NewsView from "./NewsView";
 
 export {
   HomeCard,
@@ -18,4 +19,5 @@ export {
   AboutUsSection,
   ContactUsSection,
   FooterSection,
+  NewsView,
 };

@@ -1,17 +1,19 @@
 import { Typography, Affix, Menu, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { MenuFoldOutlined } from "@ant-design/icons";
-import { Link, Events, scrollSpy } from "react-scroll";
+import { Events, scrollSpy } from "react-scroll";
 
+import Link from "next/link";
 const { Text } = Typography;
 
 function TopHeader({
-  newsRef,
-  learnRef,
-  aboutRef,
-  topHeaderRef,
-  contactUsRef,
-  mapRef,
+  newsRef = null,
+  learnRef = null,
+  aboutRef = null,
+  topHeaderRef = null,
+  contactUsRef = null,
+  mapRef = null,
+  isNewsPage,
 }) {
   let [transparent, setTransparent] = useState(false);
 
@@ -36,44 +38,53 @@ function TopHeader({
   const [menuActive, setMenuActive] = useState("Home");
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setMenuActive(entries[0].target.id);
-          history.pushState({}, null, `#${entries[0].target.id}`);
+    if (
+      newsRef &&
+      learnRef &&
+      aboutRef &&
+      topHeaderRef &&
+      contactUsRef &&
+      mapRef
+    ) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setMenuActive(entries[0].target.id);
+            history.pushState({}, null, `#${entries[0].target.id}`);
+          }
+        },
+        { threshold: 0.7 }
+      );
+      [
+        topHeaderRef.current,
+        learnRef.current,
+        newsRef.current,
+        aboutRef.current,
+        contactUsRef.current,
+        mapRef.current,
+      ].forEach((ref) => {
+        observer.observe(ref);
+      });
+
+      Events.scrollEvent.register("begin", function (to, element) {});
+
+      Events.scrollEvent.register("end", function (to, element) {});
+      scrollSpy.update();
+      window.addEventListener("scroll", (e) => {
+        let scrollTop = e.target.scrollingElement.scrollTop;
+
+        if (scrollTop > 50) {
+          setTransparent(true);
+        } else {
+          setTransparent(false);
         }
-      },
-      { threshold: 0.7 }
-    );
-    [
-      topHeaderRef.current,
-      learnRef.current,
-      newsRef.current,
-      aboutRef.current,
-      contactUsRef.current,
-      mapRef.current,
-    ].forEach((ref) => {
-      observer.observe(ref);
-    });
+      });
 
-    Events.scrollEvent.register("begin", function (to, element) {});
-
-    Events.scrollEvent.register("end", function (to, element) {});
-    scrollSpy.update();
-    window.addEventListener("scroll", (e) => {
-      let scrollTop = e.target.scrollingElement.scrollTop;
-
-      if (scrollTop > 50) {
-        setTransparent(true);
-      } else {
-        setTransparent(false);
-      }
-    });
-
-    return () => {
-      Events.scrollEvent.remove("begin");
-      Events.scrollEvent.remove("end");
-    };
+      return () => {
+        Events.scrollEvent.remove("begin");
+        Events.scrollEvent.remove("end");
+      };
+    }
   }, [newsRef, learnRef, aboutRef, topHeaderRef, contactUsRef, mapRef]);
 
   const handleDrawer = () => {
@@ -101,32 +112,66 @@ function TopHeader({
             className="float-right is-active-desktop"
             key={index}
           >
-            <a
-              style={{
-                color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
-                borderBottom:
-                  menuActive === menu
-                    ? "2px solid #59affd"
-                    : " 0px solid white",
-                paddingBottom: 10,
-              }}
-              href={`#${menu}`}
-            >
-              {menu}
-            </a>
+            {isNewsPage ? (
+              <Link
+                style={{
+                  color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
+                  borderBottom:
+                    menuActive === menu
+                      ? "2px solid #59affd"
+                      : " 0px solid white",
+                  paddingBottom: 10,
+                }}
+                href={`/#${menu}`}
+                shallow={true}
+              >
+                {menu}
+              </Link>
+            ) : (
+              <>
+                <a
+                  style={{
+                    color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
+                    borderBottom:
+                      menuActive === menu
+                        ? "2px solid #59affd"
+                        : " 0px solid white",
+                    paddingBottom: 10,
+                  }}
+                  href={`#${menu}`}
+                >
+                  {menu}
+                </a>
+              </>
+            )}
           </Menu.Item>
         ))}
 
         <div className="float-left ml-2">
-          <img src="/brand/brand@2x.png" width={50} />
+          <Link href="/">
+            <img
+              style={{
+                cursor: "pointer",
+              }}
+              src="/brand/brand@2x.png"
+              width={50}
+            />
+          </Link>
 
-          <Text
-            className="title-is-active-desktop"
-            style={{ fontSize: 20, marginLeft: 6, marginTop: 10 }}
-            strong
-          >
-            WMSU Computer Engineering
-          </Text>
+          <Link href="/">
+            <Text
+              className="title-is-active-desktop"
+              style={{
+                fontSize: 20,
+                marginLeft: 6,
+                marginTop: 10,
+                cursor: "pointer",
+              }}
+              strong
+            >
+              WMSU Computer Engineering
+            </Text>
+          </Link>
         </div>
       </Menu>
 

@@ -1,10 +1,33 @@
+import { useContext, useEffect, useState } from "react";
 import { Row, Col, Typography, Card } from "antd";
+import Axios from "axios";
+import striptags from "striptags";
+
+//import Link from "next/link";
+
+import { AppContext } from "../../context/AppContext";
 
 const { Meta } = Card;
 
 const { Title, Text } = Typography;
 
 function NewsSection() {
+  const [news, setNews] = useState([]);
+
+  const { proxy } = useContext(AppContext);
+
+  useEffect(() => {
+    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news")
+      .then((newsResponse) => {
+        let newsData = newsResponse.data;
+
+        console.log(newsData);
+
+        setNews(newsData);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div className=" p-3">
       <Title strong className="text-center mt-3" level={2}>
@@ -14,37 +37,58 @@ function NewsSection() {
         <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
           <Col md={{ span: 9 }} sm={{ span: 24 }}>
             <Card
+              className="rounded shadow-sm"
               cover={
                 <img
                   alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                  src={proxy + "/public/image/" + news[0]?.coverImageNameLg}
                 />
               }
-              actions={[<Text>Read More</Text>]}
+              actions={[
+                <a href={"/news/" + news[0]?.newsUrlSlug}>Read More</a>,
+              ]}
             >
               <Meta
-                title="This is a news title"
-                description="This is a short description for the news title, yeah good job my friend"
+                title={news[0]?.newsTitle}
+                description={
+                  <Text>
+                    {striptags(news[0]?.newsContent).length > 105
+                      ? striptags(news[0]?.newsContent).substr(0, 104) + "..."
+                      : striptags(news[0]?.newsContent)}
+                  </Text>
+                }
               />
             </Card>
           </Col>
           <Col md={{ span: 15 }} sm={{ span: 24 }}>
             <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
-              {[0, 1, 2, 3, 4, 5].map((news, index) => (
+              {news.map((news, index) => (
                 <Col key={index} md={{ span: 8 }} sm={{ span: 24 }}>
                   <Card
+                    className="rounded shadow-sm"
                     key={index}
                     cover={
                       <img
                         alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                        src={proxy + "/public/image/" + news.coverImageNameMd}
                       />
                     }
-                    actions={[<Text>Read More {news}</Text>]}
+                    actions={[
+                      <a href={"/news/" + news.newsUrlSlug}>Read More</a>,
+                      // <a shallow={true} href={"/news/" + news.newsUrlSlug}>
+                      //   Read More
+                      // </a>,
+                    ]}
                   >
                     <Meta
-                      title="This is a news title"
-                      description="This is a short description for the news title, yeah good job my friend"
+                      title={news.newsTitle}
+                      description={
+                        <Text>
+                          {striptags(news.newsContent).length > 21
+                            ? striptags(news.newsContent).substr(0, 20) + "..."
+                            : striptags(news.newsContent)}
+                        </Text>
+                      }
                     />
                   </Card>
                 </Col>

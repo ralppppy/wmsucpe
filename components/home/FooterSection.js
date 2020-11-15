@@ -3,7 +3,7 @@ import { Col, Row, Typography } from "antd";
 import { FacebookOutlined } from "@ant-design/icons";
 import { SocialIcon } from "react-social-icons";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function FooterSection() {
   return (
@@ -27,53 +27,6 @@ function FooterSection() {
             url="https://www.youtube.com/channel/UCTY6fxtqkF_dtGanIhZHHVg"
           />
         </div>
-
-        {/* <Col md={{ span: 8 }} sm={{ span: 24 }}>
-            <Title className="text-center text-white" level={3}>
-              Location
-            </Title>
-            <div className="container d-flex align-items-center justify-content-center">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.8127141795812!2d122.05986171477282!3d6.91298319500502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041e77087e82b%3A0xa8c9820ffd5905cf!2sNormal%20Rd%2C%20Zamboanga%2C%20Zamboanga%20del%20Sur!5e0!3m2!1sen!2sph!4v1601984927249!5m2!1sen!2sph"
-                height="300"
-                frameBorder="0"
-                style={{ border: 0, width: "100%" }}
-                allowFullScreen=""
-                aria-hidden="false"
-                tabIndex="0"
-              ></iframe>
-            </div>
-          </Col>
-          <Col md={{ span: 8 }} sm={{ span: 24 }}>
-            <Title className="text-center text-white" level={3}>
-              Social
-            </Title>
-          </Col>
-          <Col md={{ span: 8 }} sm={{ span: 24 }}>
-          
-
-            <ul>
-              <li>
-                <SocialIcon
-                  fgColor="#fff"
-                  url="https://www.facebook.com/wmsucomputerengineering/"
-                />
-              </li>
-              <li>
-                <SocialIcon
-                  fgColor="#fff"
-                  url="https://twitter.com/jaketrent"
-                />
-              </li>
-              <li>
-                <SocialIcon
-                  fgColor="#fff"
-                  url="https://twitter.com/jaketrent"
-                />
-              </li>
-            </ul>
-          </Col>
-       */}
       </div>
       <style jsx>
         {`
