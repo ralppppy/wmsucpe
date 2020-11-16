@@ -2,15 +2,15 @@ import Head from "next/head";
 import { Row, Col } from "antd";
 
 import {
-  TopHeader,
   HomeHeroSection,
   LearnSkills,
   NewsSection,
   AboutUsSection,
   ContactUsSection,
-  FooterSection,
   MapSection,
 } from "../components/home";
+
+import { FooterSection, TopHeader } from "../components/layout";
 
 import { useRef } from "react";
 

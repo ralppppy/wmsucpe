@@ -17,7 +17,7 @@ function LearnSkills() {
       <div className="container">
         <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
           <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded">
+            <Card className="rounded shadow-sm">
               <Row gutter={{ lg: 32 }}>
                 <Col
                   className="text-center"
@@ -44,7 +44,7 @@ function LearnSkills() {
             </Card>
           </Col>
           <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded">
+            <Card className="rounded shadow-sm">
               <Row gutter={{ lg: 32 }}>
                 <Col
                   className="text-center"
@@ -71,7 +71,7 @@ function LearnSkills() {
             </Card>
           </Col>
           <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded">
+            <Card className="rounded shadow-sm">
               <Row gutter={{ lg: 32 }}>
                 <Col
                   className="text-center"
@@ -98,7 +98,7 @@ function LearnSkills() {
             </Card>
           </Col>
           <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded">
+            <Card className="rounded shadow-sm">
               <Row gutter={{ lg: 32 }}>
                 <Col
                   className="text-center"

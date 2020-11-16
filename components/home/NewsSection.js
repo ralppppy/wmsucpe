@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { Row, Col, Typography, Card, Tooltip } from "antd";
 import Axios from "axios";
-import striptags from "striptags";
 
-//import Link from "next/link";
+import Link from "next/link";
 
 import { AppContext } from "../../context/AppContext";
 import dayjs from "dayjs";
 
 const { Meta } = Card;
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function NewsSection() {
   const [news, setNews] = useState([]);
@@ -34,53 +33,9 @@ function NewsSection() {
       <Title strong className="text-center mt-3" level={2}>
         News
       </Title>
+
       <div className="container">
         <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
-          {/* <Col md={{ span: 9 }} sm={{ span: 24 }}>
-            <Card
-              className="rounded shadow-sm"
-              cover={
-                <img
-                  alt="example"
-                  src={proxy + "/public/image/" + news[0]?.coverImageNameLg}
-                />
-              }
-              actions={[
-                <a
-                  style={{ color: "#1890ff" }}
-                  href={"/news/" + news[0]?.newsUrlSlug}
-                >
-                  Read More
-                </a>,
-              ]}
-            >
-              <Meta
-                title={
-                  <Tooltip placement="topLeft" title={news[0]?.newsTitle}>
-                    {news[0]?.newsTitle}
-                  </Tooltip>
-                }
-                description={
-                  <>
-                    <Text strong={true} type="secondary">
-                      Date Created
-                    </Text>
-                    <br />
-                    <Text type="secondary">
-                      {dayjs(news[0]?.createdAt).format(
-                        "MMMM DD, YYYY, hh:mm a"
-                      )}
-                    </Text>
-                  </>
-                  // <Text>
-                  //   {striptags(news[0]?.newsContent).length > 105
-                  //     ? striptags(news[0]?.newsContent).substr(0, 104) + "..."
-                  //     : striptags(news[0]?.newsContent)}
-                  // </Text>
-                }
-              />
-            </Card>
-          </Col> */}
           <Col md={{ span: 24 }} sm={{ span: 24 }}>
             <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
               {news.map((news, index) => (
@@ -121,17 +76,17 @@ function NewsSection() {
                             )}
                           </small>
                         </>
-                        // <Text>
-                        //   {striptags(news.newsContent).length > 21
-                        //     ? striptags(news.newsContent).substr(0, 20) + "..."
-                        //     : striptags(news.newsContent)}
-                        // </Text>
                       }
                     />
                   </Card>
                 </Col>
               ))}
             </Row>
+            <Title className="text-center" level={4}>
+              <a alt="all-news" href="/news/all">
+                Show All
+              </a>
+            </Title>
           </Col>
         </Row>
       </div>

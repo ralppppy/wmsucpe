@@ -1,32 +1,33 @@
-import Head from "next/head";
-import { Row, Col } from "antd";
-
-import { TopHeader, FooterSection } from "../../components/layout";
-import { NewsView } from "../../components/news";
+import { Col, Row, Typography } from "antd";
 import Axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import Head from "next/head";
+import React, { useContext, useEffect, useState } from "react";
+import { FooterSection, TopHeader } from "../../components/layout";
+import { AllNewsView } from "../../components/news";
 import { AppContext } from "../../context/AppContext";
-import { useRouter } from "next/router";
 
-function News() {
+const { Title } = Typography;
+
+function all() {
+  const [news, setNews] = useState([]);
+
   const { proxy } = useContext(AppContext);
-  const [singleNewsData, setSingleNewsData] = useState({ newsContent: "" });
-  const router = useRouter();
 
   useEffect(() => {
-    let pageSLug = router.query.newsUrlSlug;
-    Axios.get(proxy + "/api/v1/admin/news/single_View", {
-      params: { newsUrlSlug: pageSLug },
-    }).then((newsSingle) => {
-      let data = newsSingle.data;
-      setSingleNewsData(data);
-    });
-  }, [router.query.newsUrlSlug, proxy]);
+    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news")
+      .then((newsResponse) => {
+        let newsData = newsResponse.data;
+
+        setNews(newsData);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <>
       <Head>
         {/* Do not remove the space it will throw an error */}
-        <title> {singleNewsData?.newsTitle}</title>
+        <title>ALl News</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           rel="stylesheet"
@@ -41,7 +42,10 @@ function News() {
               <TopHeader isNewsPage={true} />
             </div>
             <div id="Home">
-              <NewsView props={{ singleNewsData, proxy }} />
+              <div className="container mt-5">
+                <Title className="text-center">All News</Title>
+                <AllNewsView news={news} />
+              </div>
             </div>
           </div>
         </Col>
@@ -70,4 +74,4 @@ function News() {
   );
 }
 
-export default News;
+export default all;

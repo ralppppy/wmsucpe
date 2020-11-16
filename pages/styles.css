@@ -5,3 +5,7 @@ body,
 .App {
   font-family: "Roboto", sans-serif;
 }
+
+svg {
+  vertical-align: baseline !important;
+}
