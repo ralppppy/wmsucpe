@@ -17,11 +17,11 @@ function NewsSection() {
   const { proxy } = useContext(AppContext);
 
   useEffect(() => {
-    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news")
+    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", {
+      params: { limit: 4 },
+    })
       .then((newsResponse) => {
         let newsData = newsResponse.data;
-
-        console.log(newsData);
 
         setNews(newsData);
       })

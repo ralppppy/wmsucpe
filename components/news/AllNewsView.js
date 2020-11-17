@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Divider,
@@ -14,42 +14,24 @@ import striptags from "striptags";
 import { AppContext } from "../../context/AppContext";
 import dayjs from "dayjs";
 import Link from "next/link";
+import Axios from "axios";
 
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
 
 function AllNewsView({ news }) {
   let { proxy } = useContext(AppContext);
-  const treeData = [
-    {
-      title: "2020",
-      key: "0-0",
-      children: [
-        {
-          title: "January",
-          key: "0-0-0",
-        },
-        {
-          title: "Febuary",
-          key: "0-0-1",
-        },
-      ],
-    },
-    {
-      title: "2019",
-      key: "0-1",
-      children: [
-        {
-          title: "January",
-          key: "0-1-0",
-        },
-        {
-          title: "Febuary",
-          key: "0-1-1",
-        },
-      ],
-    },
-  ];
+  const [archives, setArchives] = useState([]);
+
+  useEffect(() => {
+    Axios.get(proxy + "/api/v1/admin/news/archives")
+      .then((archiveResponse) => {
+        console.log(archiveResponse);
+        let { archive } = archiveResponse.data;
+        setArchives(archive);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const onSelect = (keys, event) => {
     console.log("Trigger Select", keys, event);
@@ -62,7 +44,7 @@ function AllNewsView({ news }) {
   return (
     <>
       <Divider />
-      <Row>
+      <Row gutter={[16, 16]}>
         <Col md={{ span: 19 }} sm={{ span: 24 }}>
           <Space direction="vertical">
             <Space className=" float-right mr-4">
@@ -123,10 +105,10 @@ function AllNewsView({ news }) {
                       </Space>
                     }
                   />
-                  {striptags(item.newsContent).replace(/\&nbsp;/g, "").length >
+                  {striptags(item.newsContent).replace(/\&nbsp;/g, " ").length >
                   100
                     ? striptags(item.newsContent)
-                        .replace(/\&nbsp;/g, "")
+                        .replace(/\&nbsp;/g, " ")
                         .substr(0, 100) + "..."
                     : striptags(item.newsContent)}
                   {console.log(news)}
@@ -136,19 +118,17 @@ function AllNewsView({ news }) {
           </Space>
         </Col>
         <Col md={{ span: 5 }} sm={{ span: 24 }}>
-          <div className="d-flex justify-content-center w-100">
-            <Space direction="vertical">
-              <Title level={3}>Archive</Title>
+          <Space direction="vertical">
+            <Title level={3}>Archive</Title>
 
-              <DirectoryTree
-                multiple
-                defaultExpandAll
-                onSelect={onSelect}
-                onExpand={onExpand}
-                treeData={treeData}
-              />
-            </Space>
-          </div>
+            <DirectoryTree
+              multiple
+              defaultExpandAll
+              onSelect={onSelect}
+              onExpand={onExpand}
+              treeData={archives}
+            />
+          </Space>
         </Col>
       </Row>
     </>
