@@ -1,9 +1,9 @@
 import { Typography, Affix, Menu, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { MenuFoldOutlined } from "@ant-design/icons";
-import { Events, scrollSpy } from "react-scroll";
+import { Events, scrollSpy, Link } from "react-scroll";
 
-import Link from "next/link";
+import { default as LinkUrl } from "next/link";
 const { Text } = Typography;
 
 function TopHeader({
@@ -113,7 +113,7 @@ function TopHeader({
             key={index}
           >
             {isNewsPage ? (
-              <Link
+              <LinkUrl
                 style={{
                   color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
                   borderBottom:
@@ -126,7 +126,7 @@ function TopHeader({
                 shallow={true}
               >
                 {menu}
-              </Link>
+              </LinkUrl>
             ) : (
               <>
                 <a
@@ -182,20 +182,34 @@ function TopHeader({
         onClose={handleDrawer}
         visible={drawerVisible}
       >
-        {MOBILE_MENU.map((menu) => (
-          <p key={menu}>
-            <Link
-              onClick={handleDrawer}
-              to={menu}
-              spy={true}
-              smooth={true}
-              offset={-50}
-              duration={500}
-            >
-              {menu}
-            </Link>
-          </p>
-        ))}
+        {isNewsPage ? (
+          <>
+            {MOBILE_MENU.map((menu) => (
+              <LinkUrl key={menu} href={`/#${menu}`}>
+                <p style={{ cursor: "pointer", color: "rgba(0,0,0,.85)" }}>
+                  {menu}
+                </p>
+              </LinkUrl>
+            ))}
+          </>
+        ) : (
+          <>
+            {MOBILE_MENU.map((menu) => (
+              <p key={menu}>
+                <Link
+                  onClick={handleDrawer}
+                  to={menu}
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                  {menu}
+                </Link>
+              </p>
+            ))}
+          </>
+        )}
       </Drawer>
 
       <style global jsx>{`
