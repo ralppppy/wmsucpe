@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Tree,
+  Skeleton,
 } from "antd";
 import striptags from "striptags";
 import { AppContext } from "../../context/AppContext";
@@ -22,11 +23,11 @@ const { DirectoryTree } = Tree;
 function AllNewsView({ news }) {
   let { proxy } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
+  let newsPlaceholder = new Array(2).fill(1);
 
   useEffect(() => {
     Axios.get(proxy + "/api/v1/admin/news/archives")
       .then((archiveResponse) => {
-        console.log(archiveResponse);
         let { archive } = archiveResponse.data;
         setArchives(archive);
       })
@@ -40,7 +41,6 @@ function AllNewsView({ news }) {
   const onExpand = () => {
     console.log("Trigger Expand");
   };
-
   return (
     <>
       <Divider />
@@ -66,53 +66,113 @@ function AllNewsView({ news }) {
                 },
                 pageSize: 3,
               }}
-              dataSource={news}
-              renderItem={(item) => (
-                <List.Item
-                  key={item.newsTitle}
-                  actions={[
-                    <Text>
-                      <Link href={`/news/${item.newsUrlSlug}`}>Read More</Link>
-                    </Text>,
-                  ]}
-                  extra={
-                    <img
-                      className="rounded"
-                      width={200}
-                      height={200}
-                      alt="logo"
-                      src={proxy + "/public/image/" + item.coverImageNameMd}
-                    />
-                  }
-                >
-                  <List.Item.Meta
-                    // avatar={<Avatar src={item.avatar} />}
-                    title={
-                      <Link href={"/news/" + item.newsUrlSlug}>
-                        {item.newsTitle}
-                      </Link>
-                    }
-                    description={
-                      <Space>
-                        <Text strong={true} type="secondary">
-                          Date Created:{" "}
-                        </Text>
-                        <Text type="secondary">
-                          {dayjs(item.createdAt).format(
-                            "MMMM DD, YYYY, hh:mm a"
-                          )}{" "}
-                        </Text>
-                      </Space>
-                    }
-                  />
-                  {striptags(item.newsContent).replace(/\&nbsp;/g, " ").length >
-                  100
-                    ? striptags(item.newsContent)
-                        .replace(/\&nbsp;/g, " ")
-                        .substr(0, 100) + "..."
-                    : striptags(item.newsContent)}
-                  {console.log(news)}
-                </List.Item>
+              dataSource={news.length > 0 ? news : newsPlaceholder}
+              renderItem={(item, index) => (
+                <>
+                  {news.length > 0 ? (
+                    <>
+                      <List.Item
+                        key={index}
+                        actions={[
+                          <Text>
+                            <Link href={`/news/${item.newsUrlSlug}`}>
+                              Read More
+                            </Link>
+                          </Text>,
+                        ]}
+                        extra={
+                          <img
+                            className="rounded"
+                            width={200}
+                            height={200}
+                            alt="logo"
+                            src={
+                              proxy + "/public/image/" + item.coverImageNameMd
+                            }
+                          />
+                        }
+                      >
+                        <List.Item.Meta
+                          title={
+                            <Link href={"/news/" + item.newsUrlSlug}>
+                              {item.newsTitle}
+                            </Link>
+                          }
+                          description={
+                            <Space>
+                              <Text strong={true} type="secondary">
+                                Date Created:{" "}
+                              </Text>
+                              <Text type="secondary">
+                                {dayjs(item.createdAt).format(
+                                  "MMMM DD, YYYY, hh:mm a"
+                                )}{" "}
+                              </Text>
+                            </Space>
+                          }
+                        />
+                        {striptags(item.newsContent).replace(/\&nbsp;/g, " ")
+                          .length > 100
+                          ? striptags(item.newsContent)
+                              .replace(/\&nbsp;/g, " ")
+                              .substr(0, 100) + "..."
+                          : striptags(item.newsContent)}
+                      </List.Item>
+                    </>
+                  ) : (
+                    <>
+                      <List.Item
+                        key={index}
+                        actions={[
+                          <Skeleton.Input
+                            style={{ width: "10vw" }}
+                            active={true}
+                            size="small"
+                          />,
+                        ]}
+                        extra={
+                          <Skeleton.Image
+                            className="rounded"
+                            style={{ width: 200, height: 200 }}
+                            active={true}
+                            size="small"
+                          />
+                        }
+                      >
+                        <List.Item.Meta
+                          title={
+                            <Skeleton.Input
+                              className="w-75"
+                              active={true}
+                              size="default"
+                            />
+                          }
+                          description={
+                            <>
+                              <Skeleton.Input
+                                className="mr-1"
+                                style={{ width: "5vw" }}
+                                active={true}
+                                size="small"
+                              />
+                              <Skeleton.Input
+                                style={{ width: "13vw" }}
+                                active={true}
+                                size="small"
+                              />
+                            </>
+                          }
+                        />
+                        <Skeleton
+                          className="w-100"
+                          paragraph={{ rows: 2 }}
+                          active={true}
+                          size="small"
+                        />
+                      </List.Item>
+                    </>
+                  )}
+                </>
               )}
             />
           </Space>

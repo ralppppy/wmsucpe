@@ -2,6 +2,7 @@ import { Typography, Affix, Menu, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { Events, scrollSpy, Link } from "react-scroll";
+import { useRouter } from "next/router";
 
 import { default as LinkUrl } from "next/link";
 const { Text } = Typography;
@@ -16,6 +17,7 @@ function TopHeader({
   isNewsPage,
 }) {
   let [transparent, setTransparent] = useState(false);
+  const router = useRouter();
 
   let MENU = [
     "Location",
@@ -148,7 +150,7 @@ function TopHeader({
         ))}
 
         <div className="float-left ml-2">
-          <Link href="/">
+          <LinkUrl href="/">
             <img
               style={{
                 cursor: "pointer",
@@ -156,22 +158,21 @@ function TopHeader({
               src="/brand/brand@2x.png"
               width={50}
             />
-          </Link>
+          </LinkUrl>
 
-          <Link href="/">
-            <Text
-              className="title-is-active-desktop"
-              style={{
-                fontSize: 20,
-                marginLeft: 6,
-                marginTop: 10,
-                cursor: "pointer",
-              }}
-              strong
-            >
-              WMSU Computer Engineering
-            </Text>
-          </Link>
+          <Text
+            onClick={() => router.push("/")}
+            className="title-is-active-desktop"
+            style={{
+              fontSize: 20,
+              marginLeft: 6,
+              marginTop: 10,
+              cursor: "pointer",
+            }}
+            strong
+          >
+            WMSU Computer Engineering
+          </Text>
         </div>
       </Menu>
 
