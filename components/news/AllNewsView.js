@@ -16,6 +16,7 @@ import { AppContext } from "../../context/AppContext";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Axios from "axios";
+import { useRouter } from "next/router";
 
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
@@ -23,24 +24,87 @@ const { DirectoryTree } = Tree;
 function AllNewsView({ news }) {
   let { proxy } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState([]);
+  const router = useRouter();
+
   let newsPlaceholder = new Array(2).fill(1);
 
   useEffect(() => {
     Axios.get(proxy + "/api/v1/admin/news/archives")
       .then((archiveResponse) => {
         let { archive } = archiveResponse.data;
+        archive.unshift({
+          key: "all",
+          title: "All",
+        });
         setArchives(archive);
       })
       .catch((error) => console.log(error));
   }, []);
 
+  function getParameterByName(name) {
+    var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+  }
+
+  useEffect(() => {
+    let month = getParameterByName("month");
+    let year = getParameterByName("year");
+
+    if (year && month) {
+      let expandedKeysCopy = [...expandedKeys];
+
+      if (
+        !expandedKeysCopy.includes(year) &&
+        !expandedKeysCopy.includes(`${year}-${month}`)
+      ) {
+        setExpandedKeys([...expandedKeys, `${year}`, `${year}-${month}`]);
+      } else if (!expandedKeysCopy.includes(`${year}-${month}`)) {
+        setExpandedKeys([...expandedKeys, `${year}-${month}`]);
+      } else if (!expandedKeysCopy.includes(`${year}`)) {
+        setExpandedKeys([...expandedKeys, `${year}`]);
+      }
+
+      setSelectedKeys([`${year}-${month}`]);
+    } else {
+      setExpandedKeys([`all`]);
+      setSelectedKeys([`all`]);
+    }
+  }, [router, setExpandedKeys, setSelectedKeys]);
+
   const onSelect = (keys, event) => {
-    console.log("Trigger Select", keys, event);
+    let searchKey = keys[0].split("-");
+
+    if (searchKey.length > 1) {
+      let year = searchKey[0];
+      let month = searchKey[1];
+
+      router.push({
+        pathname: "/news/all",
+        query: { month, year },
+      });
+    } else {
+      if (keys[0] === "all") {
+        setExpandedKeys([]);
+        setSelectedKeys(["all"]);
+        return router.push({
+          pathname: "/news/all",
+        });
+      } else {
+        let expandedKeysCopy = [...expandedKeys];
+        if (!expandedKeysCopy.includes(keys[0])) {
+          expandedKeysCopy = [...expandedKeysCopy, keys[0]];
+          setExpandedKeys(expandedKeysCopy);
+        }
+      }
+    }
   };
 
   const onExpand = () => {
     console.log("Trigger Expand");
   };
+
   return (
     <>
       <Divider />
@@ -60,12 +124,16 @@ function AllNewsView({ news }) {
             <List
               itemLayout="vertical"
               size="large"
-              pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
-                pageSize: 3,
-              }}
+              pagination={
+                news.length > 3
+                  ? {
+                      onChange: (page) => {
+                        console.log(page);
+                      },
+                      pageSize: 3,
+                    }
+                  : false
+              }
               dataSource={news.length > 0 ? news : newsPlaceholder}
               renderItem={(item, index) => (
                 <>
@@ -111,12 +179,8 @@ function AllNewsView({ news }) {
                             </Space>
                           }
                         />
-                        {striptags(item.newsContent).replace(/\&nbsp;/g, " ")
-                          .length > 100
-                          ? striptags(item.newsContent)
-                              .replace(/\&nbsp;/g, " ")
-                              .substr(0, 100) + "..."
-                          : striptags(item.newsContent)}
+                        {striptags(item.newsContent).replace(/\&nbsp;/g, " ")}
+                        ...
                       </List.Item>
                     </>
                   ) : (
@@ -182,8 +246,11 @@ function AllNewsView({ news }) {
             <Title level={3}>Archive</Title>
 
             <DirectoryTree
+              selectedKeys={selectedKeys}
+              expandedKeys={expandedKeys}
+              defaultSelectedKeys={selectedKeys}
+              defaultExpandedKeys={expandedKeys}
               multiple
-              defaultExpandAll
               onSelect={onSelect}
               onExpand={onExpand}
               treeData={archives}

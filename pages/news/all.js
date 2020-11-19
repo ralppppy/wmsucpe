@@ -5,23 +5,33 @@ import React, { useContext, useEffect, useState } from "react";
 import { FooterSection, TopHeader } from "../../components/layout";
 import { AllNewsView } from "../../components/news";
 import { AppContext } from "../../context/AppContext";
+import { useRouter } from "next/router";
 
 const { Title } = Typography;
 
 function all() {
+  const router = useRouter();
+
   const [news, setNews] = useState([]);
 
   const { proxy } = useContext(AppContext);
-
+  function getParameterByName(name) {
+    var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+  }
   useEffect(() => {
-    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news")
+    let month = getParameterByName("month");
+    let year = getParameterByName("year");
+    console.log(month, year);
+    let params = month && year ? { params: { month, year } } : { params: {} };
+    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", { ...params })
       .then((newsResponse) => {
         let newsData = newsResponse.data;
 
         setNews(newsData);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [router.query]);
 
   return (
     <>
