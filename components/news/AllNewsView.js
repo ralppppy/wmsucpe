@@ -17,41 +17,72 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import Axios from "axios";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "react-responsive";
 
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
 
-function AllNewsView({ news, setNews }) {
+function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   let { proxy } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
+  const [totalNewsCount, setTotalNewsCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isTabletOrMobile, setIsTabletOrMobile] = useState(false);
   const router = useRouter();
 
   let newsPlaceholder = new Array(1).fill(1);
 
+  const tabOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  function getParameterByName(name) {
+    var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+  }
   useEffect(() => {
+    let month = getParameterByName("month");
+    let year = getParameterByName("year");
+
     Axios.get(proxy + "/api/v1/admin/news/archives")
       .then((archiveResponse) => {
-        let { archive } = archiveResponse.data;
+        let { archive, totalNewsCount } = archiveResponse.data;
         archive.unshift({
           key: "all",
           title: "All",
+          newsCount: totalNewsCount,
         });
+
+        let findYear = archive.find((c) => c.key === year);
+
+        if (findYear) {
+          let findMonth = findYear.children.find(
+            (c) => c.key === `${year}-${month}`
+          );
+          setTotalNewsCount(findMonth.newsCount);
+        } else {
+          setTotalNewsCount(totalNewsCount);
+        }
 
         setArchives(archive);
       })
       .catch((error) => console.log(error));
   }, []);
 
-  function getParameterByName(name) {
-    var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-  }
+  useEffect(() => {
+    setIsTabletOrMobile(tabOrMobile);
+  }, [tabOrMobile]);
 
   useEffect(() => {
     let month = getParameterByName("month");
     let year = getParameterByName("year");
+    let page = getParameterByName("page");
+
+    if (page) {
+      setCurrentPage(parseInt(page));
+    } else {
+      setCurrentPage(1);
+    }
 
     if (year && month) {
       let expandedKeysCopy = [...expandedKeys];
@@ -78,6 +109,9 @@ function AllNewsView({ news, setNews }) {
     let searchKey = keys[0].split("-");
 
     if (searchKey.length > 1) {
+      setIsFetchingNews(true);
+
+      setTotalNewsCount(event.node.newsCount);
       setNews([]);
       let year = searchKey[0];
       let month = searchKey[1];
@@ -88,6 +122,9 @@ function AllNewsView({ news, setNews }) {
       });
     } else {
       if (keys[0] === "all") {
+        setIsFetchingNews(true);
+
+        setTotalNewsCount(event.node.newsCount);
         setExpandedKeys([]);
         setSelectedKeys(["all"]);
         return router.push({
@@ -104,44 +141,55 @@ function AllNewsView({ news, setNews }) {
   };
 
   const onExpand = () => {
-    console.log("Trigger Expand");
+    //console.log("Trigger Expand");
   };
+
+  console.log(isFetchingNews);
 
   return (
     <>
       <Divider />
       <Row gutter={[16, 16]}>
         <Col md={{ span: 19 }} sm={{ span: 24 }}>
-          <Space direction="vertical">
-            <Space className=" float-right mr-4">
+          <Space className="w-100" direction="vertical">
+            <Space className="float-right ml-4 mr-4 ">
               <Input
-                style={{ width: "50vw" }}
-                className="rounded"
+                style={{ width: isTabletOrMobile ? "100%" : "30vw" }}
+                className="rounded "
                 placeholder="Search  News"
               />
-              <Button className="rounded" type="primary">
+              <Button className="rounded text-right" type="primary">
                 Search
               </Button>
             </Space>
+
             <List
+              className="w-100"
               itemLayout="vertical"
               size="large"
-              pagination={
-                news.length > 3
-                  ? {
-                      onChange: (page) => {
-                        console.log(page);
-                      },
-                      pageSize: 3,
-                    }
-                  : false
-              }
-              dataSource={news.length > 0 ? news : newsPlaceholder}
+              pagination={{
+                onChange: (page) => {
+                  setIsFetchingNews(true);
+                  router.push({
+                    pathname: "/news/all",
+                    query: { ...router.query, page },
+                  });
+                },
+                pageSize: 3,
+                position: "top",
+                showSizeChanger: false,
+                total: totalNewsCount,
+                className: "mr-4",
+                showTotal: (total) => `Total of ${total} news`,
+                current: currentPage,
+              }}
+              dataSource={isFetchingNews === false ? news : newsPlaceholder}
               renderItem={(item, index) => (
                 <>
-                  {news.length > 0 ? (
+                  {isFetchingNews === false ? (
                     <>
                       <List.Item
+                        className="w-100"
                         key={index}
                         actions={[
                           <Text>
@@ -264,4 +312,4 @@ function AllNewsView({ news, setNews }) {
   );
 }
 
-export default AllNewsView;
+export default React.memo(AllNewsView);

@@ -37,8 +37,6 @@ function NewsSection() {
       <div className="container">
         <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
           <Col md={{ span: 24 }} sm={{ span: 24 }}>
-            {console.log(news)}
-            {/* news.length */}
             {news.length > 0 ? (
               <Row gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
                 {news.map((news, index) => (

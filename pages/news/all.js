@@ -13,6 +13,7 @@ function all() {
   const router = useRouter();
 
   const [news, setNews] = useState([]);
+  const [isFetchingNews, setIsFetchingNews] = useState(true);
 
   const { proxy } = useContext(AppContext);
   function getParameterByName(name) {
@@ -22,16 +23,34 @@ function all() {
   useEffect(() => {
     let month = getParameterByName("month");
     let year = getParameterByName("year");
-    console.log(month, year);
-    let params = month && year ? { params: { month, year } } : { params: {} };
-    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", { ...params })
+    let page = getParameterByName("page");
+    let params = { limit: 3 };
+    // month && year
+    //   ? { params: { month, year, limit: 3 } }
+    //   : { params: { limit: 3 } };
+
+    if (month) {
+      params["month"] = month;
+    }
+
+    if (year) {
+      params["year"] = year;
+    }
+
+    if (page) {
+      params["page"] = page;
+    }
+    // setIsFetchingNews(true);
+    Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", {
+      params: { ...params },
+    })
       .then((newsResponse) => {
         let newsData = newsResponse.data;
-
+        setIsFetchingNews(false);
         setNews(newsData);
       })
       .catch((error) => console.log(error));
-  }, [router.query]);
+  }, [router.query, setIsFetchingNews]);
 
   return (
     <>
@@ -54,7 +73,12 @@ function all() {
             <div id="Home">
               <div className="container mt-5">
                 <Title className="text-center">All News</Title>
-                <AllNewsView setNews={setNews} news={news} />
+                <AllNewsView
+                  setIsFetchingNews={setIsFetchingNews}
+                  isFetchingNews={isFetchingNews}
+                  setNews={setNews}
+                  news={news}
+                />
               </div>
             </div>
           </div>
