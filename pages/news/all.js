@@ -54,7 +54,7 @@ function all() {
             <div id="Home">
               <div className="container mt-5">
                 <Title className="text-center">All News</Title>
-                <AllNewsView news={news} />
+                <AllNewsView setNews={setNews} news={news} />
               </div>
             </div>
           </div>

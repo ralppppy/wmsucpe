@@ -21,14 +21,14 @@ import { useRouter } from "next/router";
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
 
-function AllNewsView({ news }) {
+function AllNewsView({ news, setNews }) {
   let { proxy } = useContext(AppContext);
   const [archives, setArchives] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
   const router = useRouter();
 
-  let newsPlaceholder = new Array(2).fill(1);
+  let newsPlaceholder = new Array(1).fill(1);
 
   useEffect(() => {
     Axios.get(proxy + "/api/v1/admin/news/archives")
@@ -38,6 +38,7 @@ function AllNewsView({ news }) {
           key: "all",
           title: "All",
         });
+
         setArchives(archive);
       })
       .catch((error) => console.log(error));
@@ -71,12 +72,13 @@ function AllNewsView({ news }) {
       setExpandedKeys([`all`]);
       setSelectedKeys([`all`]);
     }
-  }, [router, setExpandedKeys, setSelectedKeys]);
+  }, [router, setExpandedKeys, setSelectedKeys, archives]);
 
   const onSelect = (keys, event) => {
     let searchKey = keys[0].split("-");
 
     if (searchKey.length > 1) {
+      setNews([]);
       let year = searchKey[0];
       let month = searchKey[1];
 
