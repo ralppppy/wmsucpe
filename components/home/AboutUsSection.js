@@ -7,7 +7,7 @@ function AboutUsSection() {
     <div className="mb-3 p-3" style={{ backgroundColor: "#fafafa" }}>
       <div className="container mt-3 mb-3">
         <Row gutter={[32]}>
-          <Col md={{ span: 12 }} sm={{ span: 24 }}>
+          <Col md={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
             <div className="text-center">
               <Title strong className="mt-3" level={2}>
                 About Us
@@ -28,7 +28,7 @@ function AboutUsSection() {
               pariatur minim cillum officia ullamco ipsum incididunt. Magna
             </Paragraph>
           </Col>
-          <Col md={{ span: 12 }} sm={{ span: 24 }}>
+          <Col md={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
             <iframe
               className="mt-3"
               width="100%"

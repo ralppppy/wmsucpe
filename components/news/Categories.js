@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const { Title, Text } = Typography;
 
-function Categories({ proxy }) {
+function Categories({ proxy, setIsFetchingNews }) {
   const [categories, setCategories] = useState([]);
 
   const router = useRouter(0);
@@ -22,6 +22,7 @@ function Categories({ proxy }) {
   }, [proxy, setCategories]);
 
   const handleChooseCategories = (e) => {
+    setIsFetchingNews(true);
     let value = e.target.value;
 
     let category = router.query.category;

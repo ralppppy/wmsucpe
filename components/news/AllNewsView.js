@@ -1,14 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Button,
-  Divider,
-  Input,
-  List,
-  Space,
-  Typography,
-  Row,
-  Col,
-} from "antd";
+import { Button, Divider, Input, List, Space, Row, Col } from "antd";
 import { AppContext } from "../../context/AppContext";
 
 import { useRouter } from "next/router";
@@ -177,7 +168,7 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
         </Col>
         <Col className="w-100" md={{ span: 5 }} sm={{ span: 24 }}>
           <Space className="w-100" direction="vertical">
-            <Categories proxy={proxy} />
+            <Categories setIsFetchingNews={setIsFetchingNews} proxy={proxy} />
 
             <Archives
               proxy={proxy}
