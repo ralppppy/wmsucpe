@@ -8,19 +8,14 @@ import {
   Typography,
   Row,
   Col,
-  Tree,
-  Skeleton,
 } from "antd";
-import striptags from "striptags";
 import { AppContext } from "../../context/AppContext";
-import dayjs from "dayjs";
-import Link from "next/link";
-import Axios from "axios";
+
 import { useRouter } from "next/router";
 import { useMediaQuery } from "react-responsive";
 
-const { Text, Title } = Typography;
-const { DirectoryTree } = Tree;
+//COMPONENTS
+import { Archives, BlankNewsLoader, NewsListItems, Categories } from "./";
 
 function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   let { proxy } = useContext(AppContext);
@@ -40,34 +35,6 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
     var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
   }
-  useEffect(() => {
-    let month = getParameterByName("month");
-    let year = getParameterByName("year");
-
-    Axios.get(proxy + "/api/v1/admin/news/archives")
-      .then((archiveResponse) => {
-        let { archive, totalNewsCount } = archiveResponse.data;
-        archive.unshift({
-          key: "all",
-          title: "All",
-          newsCount: totalNewsCount,
-        });
-
-        let findYear = archive.find((c) => c.key === year);
-
-        if (findYear) {
-          let findMonth = findYear.children.find(
-            (c) => c.key === `${year}-${month}`
-          );
-          setTotalNewsCount(findMonth.newsCount);
-        } else {
-          setTotalNewsCount(totalNewsCount);
-        }
-
-        setArchives(archive);
-      })
-      .catch((error) => console.log(error));
-  }, []);
 
   useEffect(() => {
     setIsTabletOrMobile(tabOrMobile);
@@ -118,7 +85,7 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
 
       router.push({
         pathname: "/news/all",
-        query: { month, year },
+        query: { ...router.query, month, year },
       });
     } else {
       if (keys[0] === "all") {
@@ -127,8 +94,12 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
         setTotalNewsCount(event.node.newsCount);
         setExpandedKeys([]);
         setSelectedKeys(["all"]);
+
+        delete router.query.month;
+        delete router.query.year;
         return router.push({
           pathname: "/news/all",
+          query: { ...router.query },
         });
       } else {
         let expandedKeysCopy = [...expandedKeys];
@@ -143,8 +114,6 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   const onExpand = () => {
     //console.log("Trigger Expand");
   };
-
-  console.log(isFetchingNews);
 
   return (
     <>
@@ -188,102 +157,17 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
                 <>
                   {isFetchingNews === false ? (
                     <>
-                      <List.Item
-                        className="w-100"
-                        key={index}
-                        actions={[
-                          <Text>
-                            <Link href={`/news/${item.newsUrlSlug}`}>
-                              Read More
-                            </Link>
-                          </Text>,
-                        ]}
-                        extra={
-                          <img
-                            className="rounded"
-                            width={200}
-                            height={200}
-                            alt="logo"
-                            src={
-                              proxy + "/public/image/" + item.coverImageNameMd
-                            }
-                          />
-                        }
-                      >
-                        <List.Item.Meta
-                          title={
-                            <Link href={"/news/" + item.newsUrlSlug}>
-                              {item.newsTitle}
-                            </Link>
-                          }
-                          description={
-                            <Space>
-                              <Text strong={true} type="secondary">
-                                Date Created:{" "}
-                              </Text>
-                              <Text type="secondary">
-                                {dayjs(item.createdAt).format(
-                                  "MMMM DD, YYYY, hh:mm a"
-                                )}{" "}
-                              </Text>
-                            </Space>
-                          }
-                        />
-                        {striptags(item.newsContent).replace(/\&nbsp;/g, " ")}
-                        ...
-                      </List.Item>
+                      <NewsListItems
+                        setTotalNewsCount={setTotalNewsCount}
+                        setArchives={setArchives}
+                        index={index}
+                        item={item}
+                        proxy={proxy}
+                      />
                     </>
                   ) : (
                     <>
-                      <List.Item
-                        key={index}
-                        actions={[
-                          <Skeleton.Input
-                            style={{ width: "10vw" }}
-                            active={true}
-                            size="small"
-                          />,
-                        ]}
-                        extra={
-                          <Skeleton.Image
-                            className="rounded"
-                            style={{ width: 200, height: 200 }}
-                            active={true}
-                            size="small"
-                          />
-                        }
-                      >
-                        <List.Item.Meta
-                          title={
-                            <Skeleton.Input
-                              className="w-75"
-                              active={true}
-                              size="default"
-                            />
-                          }
-                          description={
-                            <>
-                              <Skeleton.Input
-                                className="mr-1"
-                                style={{ width: "5vw" }}
-                                active={true}
-                                size="small"
-                              />
-                              <Skeleton.Input
-                                style={{ width: "13vw" }}
-                                active={true}
-                                size="small"
-                              />
-                            </>
-                          }
-                        />
-                        <Skeleton
-                          className="w-100"
-                          paragraph={{ rows: 2 }}
-                          active={true}
-                          size="small"
-                        />
-                      </List.Item>
+                      <BlankNewsLoader index={index} />
                     </>
                   )}
                 </>
@@ -291,19 +175,19 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
             />
           </Space>
         </Col>
-        <Col md={{ span: 5 }} sm={{ span: 24 }}>
-          <Space direction="vertical">
-            <Title level={3}>Archive</Title>
+        <Col className="w-100" md={{ span: 5 }} sm={{ span: 24 }}>
+          <Space className="w-100" direction="vertical">
+            <Categories proxy={proxy} />
 
-            <DirectoryTree
+            <Archives
+              proxy={proxy}
+              setArchives={setArchives}
+              setTotalNewsCount={setTotalNewsCount}
               selectedKeys={selectedKeys}
               expandedKeys={expandedKeys}
-              defaultSelectedKeys={selectedKeys}
-              defaultExpandedKeys={expandedKeys}
-              multiple
               onSelect={onSelect}
               onExpand={onExpand}
-              treeData={archives}
+              archives={archives}
             />
           </Space>
         </Col>

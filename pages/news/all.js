@@ -24,10 +24,8 @@ function all() {
     let month = getParameterByName("month");
     let year = getParameterByName("year");
     let page = getParameterByName("page");
+    let category = getParameterByName("category");
     let params = { limit: 3 };
-    // month && year
-    //   ? { params: { month, year, limit: 3 } }
-    //   : { params: { limit: 3 } };
 
     if (month) {
       params["month"] = month;
@@ -40,6 +38,9 @@ function all() {
     if (page) {
       params["page"] = page;
     }
+    if (category) {
+      params["category"] = category;
+    }
     // setIsFetchingNews(true);
     Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", {
       params: { ...params },
@@ -48,6 +49,12 @@ function all() {
         let newsData = newsResponse.data;
         setIsFetchingNews(false);
         setNews(newsData);
+        if (newsData.length === 0 && page !== "1") {
+          router.push({
+            pathname: "/news/all",
+            query: { ...router.query, page: 1 },
+          });
+        }
       })
       .catch((error) => console.log(error));
   }, [router.query, setIsFetchingNews]);
@@ -56,7 +63,7 @@ function all() {
     <>
       <Head>
         {/* Do not remove the space it will throw an error */}
-        <title>ALl News</title>
+        <title>All News</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           rel="stylesheet"
