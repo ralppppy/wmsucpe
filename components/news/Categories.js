@@ -13,7 +13,6 @@ function Categories({ proxy, setIsFetchingNews }) {
   useEffect(() => {
     Axios.get(proxy + "/api/v1/admin/news/get_category_list")
       .then((categoryResponse) => {
-        console.log(categoryResponse);
         let data = categoryResponse.data;
 
         setCategories(data);
@@ -30,7 +29,6 @@ function Categories({ proxy, setIsFetchingNews }) {
 
     //If the query category already have category ID then remove it else Concant
     if (category) {
-      console.log(category);
       if (category.includes(value) && !category.includes(",")) {
         category = category.replace(value, "");
 

@@ -1,9 +1,10 @@
-import NewsView from "../news/NewsView";
-import AllNewsView from "../news/AllNewsView";
-import Archives from "../news/Archives";
-import BlankNewsLoader from "../news/BlankNewsLoader";
-import NewsListItems from "../news/NewsListItems";
-import Categories from "../news/Categories";
+import NewsView from "./NewsView";
+import AllNewsView from "./AllNewsView";
+import Archives from "./Archives";
+import BlankNewsLoader from "./BlankNewsLoader";
+import NewsListItems from "./NewsListItems";
+import Categories from "./Categories";
+import NewsSearch from "./NewsSearch";
 
 export {
   NewsView,
@@ -12,4 +13,5 @@ export {
   BlankNewsLoader,
   NewsListItems,
   Categories,
+  NewsSearch,
 };

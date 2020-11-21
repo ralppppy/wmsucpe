@@ -25,6 +25,7 @@ function all() {
     let year = getParameterByName("year");
     let page = getParameterByName("page");
     let category = getParameterByName("category");
+    let search = getParameterByName("search");
     let params = { limit: 3 };
 
     if (month) {
@@ -34,12 +35,14 @@ function all() {
     if (year) {
       params["year"] = year;
     }
-
     if (page) {
       params["page"] = page;
     }
     if (category) {
       params["category"] = category;
+    }
+    if (search) {
+      params["search"] = search;
     }
     // setIsFetchingNews(true);
     Axios.get(proxy + "/api/v1/admin/news/get_landing_page_news", {

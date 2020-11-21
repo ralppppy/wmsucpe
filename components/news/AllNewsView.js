@@ -3,10 +3,15 @@ import { Button, Divider, Input, List, Space, Row, Col } from "antd";
 import { AppContext } from "../../context/AppContext";
 
 import { useRouter } from "next/router";
-import { useMediaQuery } from "react-responsive";
 
 //COMPONENTS
-import { Archives, BlankNewsLoader, NewsListItems, Categories } from "./";
+import {
+  Archives,
+  BlankNewsLoader,
+  NewsListItems,
+  Categories,
+  NewsSearch,
+} from "./";
 
 function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   let { proxy } = useContext(AppContext);
@@ -15,21 +20,14 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [totalNewsCount, setTotalNewsCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isTabletOrMobile, setIsTabletOrMobile] = useState(false);
   const router = useRouter();
 
   let newsPlaceholder = new Array(1).fill(1);
-
-  const tabOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   function getParameterByName(name) {
     var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
   }
-
-  useEffect(() => {
-    setIsTabletOrMobile(tabOrMobile);
-  }, [tabOrMobile]);
 
   useEffect(() => {
     let month = getParameterByName("month");
@@ -109,19 +107,10 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
   return (
     <>
       <Divider />
-      <Row gutter={[16, 16]}>
+      <Row gutter={[32, 32]}>
         <Col md={{ span: 19 }} sm={{ span: 24 }} xs={{ span: 24 }}>
           <Space className="w-100" direction="vertical">
-            <Space className="float-right ml-4">
-              <Input
-                style={{ width: isTabletOrMobile ? "100%" : "30vw" }}
-                className="rounded "
-                placeholder="Search  News"
-              />
-              <Button className="rounded text-right" type="primary">
-                Search
-              </Button>
-            </Space>
+            <NewsSearch />
 
             <List
               className="w-100"

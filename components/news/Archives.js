@@ -27,16 +27,19 @@ function Archives(props) {
     let month = getParameterByName("month");
     let year = getParameterByName("year");
     let category = getParameterByName("category");
+    let search = getParameterByName("search");
     let params = { category: "" };
 
     if (category) {
       params["category"] = category;
     }
+    if (search) {
+      params["search"] = search;
+    }
 
     Axios.get(proxy + "/api/v1/admin/news/archives", { params: { ...params } })
       .then((archiveResponse) => {
         let { archive, totalNewsCount } = archiveResponse.data;
-        console.log(archive);
         archive.unshift({
           key: "all",
           title: "All",
@@ -49,8 +52,6 @@ function Archives(props) {
           let findMonth = findYear.children.find(
             (c) => c.key === `${year}-${month}`
           );
-
-          console.log(findMonth);
 
           setTotalNewsCount(findMonth?.newsCount);
         } else {
