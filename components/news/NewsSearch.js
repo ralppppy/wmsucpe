@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 
-function NewsSearch() {
+function NewsSearch({ setIsFetchingNews }) {
   const [isTabletOrMobile, setIsTabletOrMobile] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -21,6 +21,7 @@ function NewsSearch() {
   }, [router.query]);
 
   const handleClick = () => {
+    setIsFetchingNews(true);
     if (searchValue) {
       router.push({
         pathname: "/news/all",

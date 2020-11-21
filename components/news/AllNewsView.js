@@ -110,7 +110,7 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
       <Row gutter={[32, 32]}>
         <Col md={{ span: 19 }} sm={{ span: 24 }} xs={{ span: 24 }}>
           <Space className="w-100" direction="vertical">
-            <NewsSearch />
+            <NewsSearch setIsFetchingNews={setIsFetchingNews} />
 
             <List
               className="w-100"
