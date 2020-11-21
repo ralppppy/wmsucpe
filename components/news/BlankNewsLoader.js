@@ -4,6 +4,7 @@ import React from "react";
 function BlankNewsLoader({ index }) {
   return (
     <List.Item
+      className="w-100"
       key={index}
       actions={[
         <Skeleton.Input style={{ width: "10vw" }} active={true} size="small" />,
@@ -18,6 +19,7 @@ function BlankNewsLoader({ index }) {
       }
     >
       <List.Item.Meta
+        className="w-100"
         title={<Skeleton.Input className="w-75" active={true} size="default" />}
         description={
           <>

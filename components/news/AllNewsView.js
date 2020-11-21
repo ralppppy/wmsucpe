@@ -110,9 +110,9 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
     <>
       <Divider />
       <Row gutter={[16, 16]}>
-        <Col md={{ span: 19 }} sm={{ span: 24 }}>
+        <Col md={{ span: 19 }} sm={{ span: 24 }} xs={{ span: 24 }}>
           <Space className="w-100" direction="vertical">
-            <Space className="float-right ml-4 mr-4 ">
+            <Space className="float-right ml-4">
               <Input
                 style={{ width: isTabletOrMobile ? "100%" : "30vw" }}
                 className="rounded "
@@ -139,7 +139,7 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
                 position: "top",
                 showSizeChanger: false,
                 total: totalNewsCount,
-                className: "mr-4",
+                // className: "mr-4",
                 showTotal: (total) => `Total of ${total} news`,
                 current: currentPage,
               }}
@@ -166,7 +166,12 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
             />
           </Space>
         </Col>
-        <Col className="w-100" md={{ span: 5 }} sm={{ span: 24 }}>
+        <Col
+          className="w-100"
+          md={{ span: 5 }}
+          sm={{ span: 24 }}
+          xs={{ span: 24 }}
+        >
           <Space className="w-100" direction="vertical">
             <Categories setIsFetchingNews={setIsFetchingNews} proxy={proxy} />
 
@@ -183,6 +188,12 @@ function AllNewsView({ news, setNews, isFetchingNews, setIsFetchingNews }) {
           </Space>
         </Col>
       </Row>
+
+      <style global jsx>{`
+        .ant-list-lg .ant-list-item {
+          padding: 16px 0px !important;
+        }
+      `}</style>
     </>
   );
 }
