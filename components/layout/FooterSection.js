@@ -1,6 +1,5 @@
-import { Col, Row, Typography } from "antd";
+import { Typography } from "antd";
 
-import { FacebookOutlined } from "@ant-design/icons";
 import { SocialIcon } from "react-social-icons";
 
 const { Title } = Typography;

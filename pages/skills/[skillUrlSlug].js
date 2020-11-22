@@ -2,32 +2,34 @@ import Head from "next/head";
 import { Row, Col, Result, Button } from "antd";
 
 import { TopHeader, FooterSection } from "../../components/layout";
-import { NewsView } from "../../components/news";
+import { SkillView } from "../../components/skill";
 import Axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-function News() {
+function Skill() {
   const { proxy } = useContext(AppContext);
-  const [singleNewsData, setSingleNewsData] = useState({ newsContent: "" });
+  const [singleSkillData, setSingleSkillData] = useState({ SkillContent: "" });
   const router = useRouter();
 
   useEffect(() => {
-    let pageSLug = router.query.newsUrlSlug;
-    Axios.get(proxy + "/api/v1/admin/news/single_View", {
-      params: { newsUrlSlug: pageSLug },
-    }).then((newsSingle) => {
-      let data = newsSingle.data;
-      setSingleNewsData(data);
+    let pageSLug = router.query.skillUrlSlug;
+    Axios.get(proxy + "/api/v1/admin/skill/single_View", {
+      params: { skillUrlSlug: pageSLug },
+    }).then((skillSingle) => {
+      let data = skillSingle.data;
+
+      console.log(data);
+      setSingleSkillData(data);
     });
-  }, [router.query.newsUrlSlug, proxy]);
+  }, [router.query.skillUrlSlug, proxy]);
   return (
     <>
       <Head>
         {/* Do not remove the space it will throw an error */}
-        <title> {singleNewsData?.newsTitle}</title>
+        <title> {singleSkillData?.skillTitle}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           rel="stylesheet"
@@ -42,16 +44,16 @@ function News() {
               <TopHeader isNotHOme={true} />
             </div>
             <div id="Home">
-              {singleNewsData ? (
-                <NewsView props={{ singleNewsData, proxy }} />
+              {singleSkillData ? (
+                <SkillView props={{ singleSkillData, proxy }} />
               ) : (
                 <Result
                   status="404"
                   title="404"
                   subTitle="Sorry, the page you visited does not exist."
                   extra={
-                    <Link href="/news/all">
-                      <Button type="default">Go to news list</Button>
+                    <Link href="/">
+                      <Button type="default">Go back to Home</Button>
                     </Link>
                   }
                 />
@@ -84,4 +86,4 @@ function News() {
   );
 }
 
-export default News;
+export default Skill;

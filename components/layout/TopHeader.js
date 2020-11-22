@@ -14,7 +14,7 @@ function TopHeader({
   topHeaderRef = null,
   contactUsRef = null,
   mapRef = null,
-  isNewsPage,
+  isNotHOme,
 }) {
   let [transparent, setTransparent] = useState(false);
   const router = useRouter();
@@ -114,7 +114,7 @@ function TopHeader({
             className="float-right is-active-desktop"
             key={index}
           >
-            {isNewsPage ? (
+            {isNotHOme ? (
               <LinkUrl
                 style={{
                   color: menuActive === menu ? "#1890ff" : "rgba(0,0,0,.85)",
@@ -183,7 +183,7 @@ function TopHeader({
         onClose={handleDrawer}
         visible={drawerVisible}
       >
-        {isNewsPage ? (
+        {isNotHOme ? (
           <>
             {MOBILE_MENU.map((menu) => (
               <LinkUrl key={menu} href={`/#${menu}`}>
