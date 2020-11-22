@@ -25,7 +25,7 @@ function NewsSearch({ setIsFetchingNews }) {
     if (searchValue) {
       router.push({
         pathname: "/news/all",
-        query: { search: searchValue.toLowerCase() },
+        query: { search: searchValue },
       });
     } else {
       router.push({

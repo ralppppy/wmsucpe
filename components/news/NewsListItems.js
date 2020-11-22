@@ -20,7 +20,7 @@ function NewsListItems({ index, item, proxy }) {
           width={200}
           height={200}
           alt="logo"
-          src={proxy + "/public/image/" + item.coverImageNameMd}
+          src={proxy + "/public/image/news/" + item.coverImageNameMd}
         />
       }
     >

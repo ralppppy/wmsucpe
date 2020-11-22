@@ -52,7 +52,9 @@ function NewsSection() {
                   cover={
                     <img
                       alt="example"
-                      src={proxy + "/public/image/" + news.coverImageNameMd}
+                      src={
+                        proxy + "/public/image/news/" + news.coverImageNameMd
+                      }
                     />
                   }
                   actions={[

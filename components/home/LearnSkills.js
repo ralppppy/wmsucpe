@@ -6,9 +6,26 @@ import Networking from "../../public/brand/networking.png";
 import Programming from "../../public/brand/algorithm.png";
 import Hardware from "../../public/brand/computer.png";
 import IOT from "../../public/brand/iot.png";
+import { useContext, useEffect, useState } from "react";
+import Axios from "axios";
+import { AppContext } from "../../context/AppContext";
 const { Title, Text } = Typography;
 
 function LearnSkills() {
+  let { proxy } = useContext(AppContext);
+
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    Axios.get(proxy + "/api/v1/admin/skill/get_landing_page_learn_skills")
+      .then((skillsResponse) => {
+        let data = skillsResponse.data;
+        setSkills(data);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }, [proxy]);
+
   return (
     <div className="mb-3 p-3" style={{ backgroundColor: "#fafafa" }}>
       <Title strong className="text-center mt-3" level={2}>
@@ -16,113 +33,45 @@ function LearnSkills() {
       </Title>
       <div className="container">
         <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
-          <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded shadow-sm">
-              <Row gutter={{ lg: 32 }}>
-                <Col
-                  className="text-center"
-                  md={{ span: 24 }}
-                  sm={{ span: 24 }}
-                >
-                  <img src={Networking} width={70} />
-                </Col>
-                <Col md={{ span: 24 }} sm={{ span: 24 }}>
-                  <div className="text-center">
-                    <Text strong>Networking</Text>
-                  </div>
+          {skills.map((skill) => (
+            <Col md={{ span: 6 }} sm={{ span: 24 }}>
+              <Card style={{ minHeight: 226 }} className="rounded shadow-sm">
+                <Row gutter={{ lg: 32 }}>
+                  <Col
+                    className="text-center"
+                    md={{ span: 24 }}
+                    sm={{ span: 24 }}
+                  >
+                    <img
+                      src={
+                        proxy + "/public/image/skill/" + skill.coverImageIcon
+                      }
+                      width={70}
+                    />
+                  </Col>
+                  <Col md={{ span: 24 }} sm={{ span: 24 }}>
+                    <div className="text-center">
+                      <Text strong>{skill.skillTitle}</Text>
+                    </div>
 
-                  <Text>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry
-                  </Text>
-                  <br />
-                  <Link href="/">
-                    <a>Learn More...</a>
-                  </Link>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded shadow-sm">
-              <Row gutter={{ lg: 32 }}>
-                <Col
-                  className="text-center"
-                  md={{ span: 24 }}
-                  sm={{ span: 24 }}
-                >
-                  <img src={Programming} width={70} />
-                </Col>
-                <Col md={{ span: 24 }} sm={{ span: 24 }}>
-                  <div className="text-center">
-                    <Text strong>Programming</Text>
-                  </div>
+                    <Text>{skill.skillDescription}</Text>
+                  </Col>
+                </Row>
 
-                  <Text>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry
-                  </Text>
-                  <br />
-                  <Link href="/">
-                    <a>Learn More...</a>
-                  </Link>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded shadow-sm">
-              <Row gutter={{ lg: 32 }}>
-                <Col
-                  className="text-center"
-                  md={{ span: 24 }}
-                  sm={{ span: 24 }}
+                <a
+                  href={"/skills/" + skill.skillUrlSlug}
+                  style={{
+                    color: "#1890ff",
+                    position: "absolute",
+                    bottom: 20,
+                    left: 24,
+                  }}
                 >
-                  <img src={Hardware} width={70} />
-                </Col>
-                <Col md={{ span: 24 }} sm={{ span: 24 }}>
-                  <div className="text-center">
-                    <Text strong>Computer Hardware</Text>
-                  </div>
-
-                  <Text>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry
-                  </Text>
-                  <br />
-                  <Link href="/">
-                    <a>Learn More...</a>
-                  </Link>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col md={{ span: 6 }} sm={{ span: 24 }}>
-            <Card className="rounded shadow-sm">
-              <Row gutter={{ lg: 32 }}>
-                <Col
-                  className="text-center"
-                  md={{ span: 24 }}
-                  sm={{ span: 24 }}
-                >
-                  <img src={IOT} width={70} />
-                </Col>
-                <Col md={{ span: 24 }} sm={{ span: 24 }}>
-                  <div className="text-center">
-                    <Text strong>Internet of things</Text>
-                  </div>
-                  <Text>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry
-                  </Text>
-                  <br />
-                  <Link href="/">
-                    <a>Learn More...</a>
-                  </Link>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
+                  Learn More...
+                </a>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </div>
     </div>

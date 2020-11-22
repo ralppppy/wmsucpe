@@ -22,7 +22,7 @@ function NewsView({ props }) {
           <Image
             alt="news-cover"
             style={{ cursor: "pointer" }}
-            src={`${proxy}/public/image/${singleNewsData?.coverImageNameLg}`}
+            src={`${proxy}/public/image/news/${singleNewsData?.coverImageNameLg}`}
           />
           <Divider />
           {parse(singleNewsData?.newsContent)}
