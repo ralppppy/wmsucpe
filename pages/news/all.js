@@ -78,7 +78,7 @@ function all() {
         <Col className="w-100" md={{ span: 24 }}>
           <div className="d-flex flex-column bd-highlight mb-3 justify-space-between">
             <div id="Home">
-              <TopHeader isNewsPage={true} />
+              <TopHeader isNotHOme={true} />
             </div>
             <div id="Home">
               <div className="container mt-5">
@@ -95,7 +95,7 @@ function all() {
         </Col>
       </Row>
       <div id="Footer">
-        <FooterSection isNewsPage={true} />
+        <FooterSection isNotHOme={true} />
       </div>
       <style global jsx>{`
         * {

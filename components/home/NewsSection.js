@@ -13,6 +13,7 @@ const { Title } = Typography;
 
 function NewsSection() {
   const [news, setNews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { proxy } = useContext(AppContext);
 
@@ -24,6 +25,7 @@ function NewsSection() {
         let newsData = newsResponse.data;
 
         setNews(newsData);
+        setIsLoading(false);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -37,12 +39,13 @@ function NewsSection() {
       <div className="container">
         {/* <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
           <Col className="w-100" md={{ span: 24 }} sm={{ span: 24 }}> */}
-        {news.length > 0 ? (
+        {!isLoading ? (
           <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
             {news.map((news, index) => (
               <Col
                 key={index}
-                md={{ span: 6 }}
+                lg={{ span: 6 }}
+                md={{ span: 12 }}
                 sm={{ span: 24 }}
                 xs={{ span: 24 }}
               >
@@ -79,7 +82,7 @@ function NewsSection() {
                         </small>
                         <br />
                         <small>
-                          {dayjs(news[0]?.createdAt).format(
+                          {dayjs(news?.createdAt).format(
                             "MMMM DD, YYYY, hh:mm a"
                           )}
                         </small>
@@ -95,7 +98,8 @@ function NewsSection() {
             {new Array(4).fill(1).map((news, index) => (
               <Col
                 key={index}
-                md={{ span: 6 }}
+                lg={{ span: 6 }}
+                md={{ span: 12 }}
                 sm={{ span: 24 }}
                 xs={{ span: 24 }}
               >

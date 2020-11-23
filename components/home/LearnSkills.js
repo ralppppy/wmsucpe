@@ -34,22 +34,32 @@ function LearnSkills() {
           {isLoading ? (
             <>
               {newsPlaceholder.map((p) => (
-                <Col md={{ span: 6 }} sm={{ span: 24 }}>
+                <Col
+                  lg={{ span: 6 }}
+                  md={{ span: 12 }}
+                  sm={{ span: 24 }}
+                  xs={{ span: 24 }}
+                >
                   <Card
                     style={{ minHeight: 226 }}
-                    className="rounded shadow-sm"
+                    className="rounded shadow-sm "
                   >
                     <Row gutter={{ lg: 32 }}>
                       <Col
                         className="text-center mb-2"
                         md={{ span: 24 }}
                         sm={{ span: 24 }}
+                        xs={{ span: 24 }}
                       >
                         <div>
                           <Skeleton.Image width={70} />
                         </div>
                       </Col>
-                      <Col md={{ span: 24 }} sm={{ span: 24 }}>
+                      <Col
+                        md={{ span: 24 }}
+                        sm={{ span: 24 }}
+                        xs={{ span: 24 }}
+                      >
                         <div className="text-center">
                           <Skeleton.Input
                             style={{ width: 90 }}
@@ -82,7 +92,12 @@ function LearnSkills() {
           ) : (
             <>
               {skills.map((skill) => (
-                <Col md={{ span: 6 }} sm={{ span: 24 }}>
+                <Col
+                  lg={{ span: 6 }}
+                  md={{ span: 12 }}
+                  sm={{ span: 24 }}
+                  xs={{ span: 24 }}
+                >
                   <Card
                     style={{ minHeight: 226 }}
                     className="rounded shadow-sm"
@@ -92,6 +107,7 @@ function LearnSkills() {
                         className="text-center"
                         md={{ span: 24 }}
                         sm={{ span: 24 }}
+                        xs={{ span: 24 }}
                       >
                         <img
                           src={
@@ -102,7 +118,11 @@ function LearnSkills() {
                           width={70}
                         />
                       </Col>
-                      <Col md={{ span: 24 }} sm={{ span: 24 }}>
+                      <Col
+                        md={{ span: 24 }}
+                        sm={{ span: 24 }}
+                        xs={{ span: 24 }}
+                      >
                         <div className="text-center">
                           <Text strong>{skill.skillTitle}</Text>
                         </div>
