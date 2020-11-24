@@ -33,8 +33,9 @@ function LearnSkills() {
         <Row gutter={[16, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
           {isLoading ? (
             <>
-              {newsPlaceholder.map((p) => (
+              {newsPlaceholder.map((p, index) => (
                 <Col
+                  key={index}
                   lg={{ span: 6 }}
                   md={{ span: 12 }}
                   sm={{ span: 24 }}
@@ -91,8 +92,9 @@ function LearnSkills() {
             </>
           ) : (
             <>
-              {skills.map((skill) => (
+              {skills.map((skill, index) => (
                 <Col
+                  key={index}
                   lg={{ span: 6 }}
                   md={{ span: 12 }}
                   sm={{ span: 24 }}
