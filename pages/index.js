@@ -76,7 +76,7 @@ const Home = () => {
 
       <MessengerCustomerChat
         pageId="104348234712975"
-        appId="180191003344026"
+        appId="124841692586474"
         // htmlRef="<REF_STRING>"
       />
       <div id="Footer">
