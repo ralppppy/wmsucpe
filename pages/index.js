@@ -14,6 +14,8 @@ import { FooterSection, TopHeader } from "../components/layout";
 
 import { useRef } from "react";
 
+import MessengerCustomerChat from "react-messenger-customer-chat";
+
 const Home = () => {
   const newsRef = useRef();
   const learnRef = useRef();
@@ -71,6 +73,11 @@ const Home = () => {
           </div>
         </Col>
       </Row>
+      <MessengerCustomerChat
+        pageId="ClothingAccessoriesOnlinePH"
+        appId="180191003344026"
+        // htmlRef="<REF_STRING>"
+      />
       <div id="Footer">
         <FooterSection />
       </div>

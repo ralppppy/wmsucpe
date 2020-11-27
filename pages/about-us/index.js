@@ -27,7 +27,7 @@ function index() {
     <>
       <Head>
         {/* Do not remove the space it will throw an error */}
-        <title>All News</title>
+        <title> Bachelor of Science in Computer Engineering</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           rel="stylesheet"
