@@ -1,7 +1,7 @@
 import { Row, Col, Typography, Skeleton } from "antd";
 import Axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-scroll";
+
 import { AppContext } from "../../context/AppContext";
 
 const { Title, Paragraph } = Typography;

@@ -1,23 +1,45 @@
-import { Divider, Image, Skeleton, Space, Typography } from "antd";
+import { Divider, Image, Skeleton, Space, Typography, Button } from "antd";
 import parse from "html-react-parser";
 import dayjs from "dayjs";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import striptags from "striptags";
+
+const DynamicComponentWithNoSSR = dynamic(() => import("./ReadNews"), {
+  ssr: false,
+});
 
 const { Title, Text } = Typography;
 function NewsView({ props }) {
+  const [read, setRead] = useState(false);
   let { singleNewsData, proxy } = props;
 
   return (
     <div className="container mt-5">
       {singleNewsData.hasOwnProperty("id") ? (
         <>
+          {read && (
+            <DynamicComponentWithNoSSR
+              text={striptags(singleNewsData?.newsContent).replace(
+                /\&nbsp;/g,
+                " "
+              )}
+            />
+          )}
           <Title className="font-weight-bolder">
             {singleNewsData?.newsTitle}
           </Title>
-
           <Text strong={true}>Date Created: </Text>
           <Text>
             {dayjs(singleNewsData?.createdAt).format("MMMM DD, YYYY, hh:mm a")}{" "}
           </Text>
+          <br /> <br />
+          <Space>
+            <Button type="primary" onClick={() => setRead(true)}>
+              Start Reading
+            </Button>
+            <Button onClick={() => setRead(false)}>Stop Reading</Button>
+          </Space>
           <Divider />
           <Image
             alt="news-cover"
