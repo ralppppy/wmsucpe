@@ -74,11 +74,7 @@ const Home = () => {
         </Col>
       </Row>
 
-      <MessengerCustomerChat
-        pageId="104348234712975"
-        appId="124841692586474"
-        // htmlRef="<REF_STRING>"
-      />
+      <MessengerCustomerChat pageId="104348234712975" appId="124841692586474" />
       <div id="Footer">
         <FooterSection />
       </div>

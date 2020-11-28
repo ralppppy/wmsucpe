@@ -7,7 +7,7 @@ import { AppContext } from "../../context/AppContext";
 const { Title, Text } = Typography;
 
 function LearnSkills() {
-  let { proxy } = useContext(AppContext);
+  let { proxy, learnSkillRef } = useContext(AppContext);
 
   const [skills, setSkills] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +25,11 @@ function LearnSkills() {
   }, [proxy]);
 
   return (
-    <div className="mb-3 p-3" style={{ backgroundColor: "#fafafa" }}>
+    <div
+      ref={learnSkillRef}
+      className="mb-3 p-3"
+      style={{ backgroundColor: "#fafafa" }}
+    >
       <Title strong className="text-center mt-3" level={2}>
         Learn this skills
       </Title>

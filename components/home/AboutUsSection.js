@@ -16,7 +16,6 @@ function AboutUsSection() {
       .then((aboutUsResponse) => {
         let data = aboutUsResponse.data[0];
         setAboutUsData(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
   }, [proxy]);

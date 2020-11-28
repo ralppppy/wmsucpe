@@ -1,22 +1,38 @@
 import { Typography, Button, Row, Col } from "antd";
+import Link from "next/link";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
 const { Title, Text } = Typography;
 
 function HomeHeroSection() {
+  const { learnSkillRef } = useContext(AppContext);
   return (
     <>
       <div className="hero-section container mt-5">
         <Row className="mt-5">
           <Col md={{ span: 12 }} className="d-flex align-items-center">
             <div style={{ padding: 10 }}>
-              <Title className={"text-title"}>WELCOME!</Title>
-              <Title level={3}>
-                Do you have what it takes to became a computer engineer?
+              <Title level={1} className={"text-title font-weight-bolder"}>
+                WELCOME!
+              </Title>
+              <Title className="support-text" level={3}>
+                Ehehem one two three four payb.
               </Title>
 
               <br />
-              <Button className={`register-button text-center`} type="primary">
-                <Text className="button-text">Pre-Register Now!</Text>
+
+              <Button
+                onClick={() =>
+                  learnSkillRef.current.scrollIntoView({ behavior: "smooth" })
+                }
+                className={`register-button text-center rounded `}
+                type="primary"
+                size="large"
+              >
+                <Text className="button-text font-weight-bolder">
+                  LETS GET STARTED!
+                </Text>
               </Button>
             </div>
           </Col>
@@ -42,6 +58,32 @@ function HomeHeroSection() {
           height: 65%;
           padding: 0;
           text-align: left;
+        }
+
+        .register-button {
+          padding: 10px 10px 10px 10px;
+          background-color: red;
+        }
+
+        .text-title {
+          font-size: 50px !important;
+          font-weight: 1000 !important;
+        }
+
+        .support-text {
+          color: rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .ant-btn-primary:hover,
+        .ant-btn-primary:focus {
+          color: #fff;
+          background: #4459a5 !important;
+          border-color: #4459a5 !important;
+        }
+        .ant-btn-primary {
+          color: #fff;
+          background: #34478c !important;
+          border-color: #34478c !important;
         }
 
         /* Extra small devices (phones, 600px and down) */
