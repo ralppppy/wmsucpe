@@ -1,4 +1,4 @@
-import { Row, Col, Typography } from "antd";
+import { Row, Col, Typography, Skeleton } from "antd";
 import Axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-scroll";
@@ -30,8 +30,16 @@ function AboutUsSection() {
                 About Us
               </Title>
             </div>
-            <Paragraph>{aboutusData?.aboutUsIntroduction}</Paragraph>
-            <a href="/about-us">Read More</a>
+            {aboutusData ? (
+              <>
+                <Paragraph>{aboutusData?.aboutUsIntroduction}</Paragraph>
+                <a href="/about-us">Read More</a>
+              </>
+            ) : (
+              <>
+                <Skeleton paragraph={{ rows: 5 }} />
+              </>
+            )}
           </Col>
           <Col md={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
             <iframe
