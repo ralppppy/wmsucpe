@@ -2,7 +2,7 @@ import { Divider, Image, Skeleton, Space, Typography, Button } from "antd";
 import parse from "html-react-parser";
 import dayjs from "dayjs";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import striptags from "striptags";
 
 const DynamicComponentWithNoSSR = dynamic(() => import("./ReadNews"), {
@@ -13,6 +13,12 @@ const { Title, Text } = Typography;
 function NewsView({ props }) {
   const [read, setRead] = useState(false);
   let { singleNewsData, proxy } = props;
+
+  useEffect(() => {
+    return () => {
+      setRead(false);
+    };
+  }, []);
 
   return (
     <div className="container mt-5">
