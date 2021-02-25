@@ -1,12 +1,12 @@
-import { Typography, Button, Row, Col } from "antd";
-import Link from "next/link";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { Typography, Button, Row, Col } from "antd"
+import Link from "next/link"
+import { useContext } from "react"
+import { AppContext } from "../../context/AppContext"
 
-const { Title, Text } = Typography;
+const { Title, Text } = Typography
 
 function HomeHeroSection() {
-  const { learnSkillRef } = useContext(AppContext);
+  const { learnSkillRef } = useContext(AppContext)
   return (
     <>
       <div className="hero-section container mt-5">
@@ -17,7 +17,7 @@ function HomeHeroSection() {
                 WELCOME!
               </Title>
               <Title className="support-text" level={3}>
-                Ehehem one two three four payb.
+                Do you want to be a Computer Engineer?
               </Title>
 
               <br />
@@ -31,7 +31,7 @@ function HomeHeroSection() {
                 size="large"
               >
                 <Text className="button-text font-weight-bolder">
-                  LETS GET STARTED!
+                  Pre Register Now!
                 </Text>
               </Button>
             </div>
@@ -153,7 +153,7 @@ function HomeHeroSection() {
         }
       `}</style>
     </>
-  );
+  )
 }
 
-export default HomeHeroSection;
+export default HomeHeroSection
